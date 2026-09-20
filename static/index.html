@@ -3,94 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KER Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് AI പോർട്ടൽ</title>
+    <title>KER Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് AI ചാറ്റ്</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', 'Manjari', sans-serif;
             background-color: #0f172a;
         }
+        .chat-scroll {
+            height: calc(100vh - 240px);
+        }
+        @media (max-width: 768px) {
+            .chat-scroll {
+                height: calc(100vh - 310px);
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-slate-100 justify-between">
+<body class="min-h-screen flex flex-col text-slate-100">
 
     <!-- Header -->
-    <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-4 sticky top-0 z-30 shadow-md">
-        <div class="max-w-5xl mx-auto flex items-center justify-between">
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3.5 sticky top-0 z-30 shadow-md">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-tight text-white">KER AI Ready Reckoner</h1>
-                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഡിജിറ്റൽ ഗൈഡ്</p>
+                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഇന്റലിജന്റ് അസിസ്റ്റന്റ്</p>
                 </div>
             </div>
             
-            <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
-               target="_blank" 
-               class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs md:text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
-                <span>നോട്ട്ബുക്ക് തുറക്കുക</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>ലൈവ് സിസ്റ്റം തയ്യാറാണ്</span>
+                </span>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 flex flex-col justify-center items-center text-center">
-
-        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl space-y-6 w-full max-w-2xl">
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Left Sidebar: Quick Topics & Guidance (4 cols) -->
+        <div class="lg:col-span-4 space-y-4">
             
-            <div class="w-16 h-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mx-auto">
-                <i class="fa-solid fa-book-bookmark"></i>
+            <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 shadow-sm">
+                <h3 class="font-bold text-white text-sm mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-400"></i> പ്രധാന വിഷയങ്ങൾ (Quick Topics)
+                </h3>
+                <p class="text-xs text-slate-400 mb-3">താഴെ പറയുന്നവയിൽ ക്ലിക്ക് ചെയ്തോ അല്ലെങ്കിൽ നേരിട്ട് ചോദ്യങ്ങൾ ടൈപ്പ് ചെയ്തോ ചോദിക്കാം:</p>
+
+                <div class="space-y-2">
+                    <button onclick="askPrompt('ഹൈസ്കൂൾ ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ നിബന്ധനകൾ (Rule 44A) എന്തൊക്കെയാണ്?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>HM പ്രമോഷൻ മാനദണ്ഡങ്ങൾ (Rule 44A)</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                    <button onclick="askPrompt('KER Chapter XIV-A Rule 43 പ്രകാരം പ്രമോഷൻ എങ്ങനെയാണ്?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>Rule 43 പ്രമോഷൻ അവകാശങ്ങൾ</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                    <button onclick="askPrompt('Rule 51A, 51B മുൻഗണനാ നിയമനങ്ങൾ എന്തെല്ലാമാണ്?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>Rule 51A / 51B മുൻഗണനാ നിയമനം</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                    <button onclick="askPrompt('അധ്യാപകരുടെ അവധി നിയമങ്ങളും കാഷ്വൽ ലീവും (Leave Rules) വിശദീകരിക്കുക.')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>അവധി നിയമങ്ങൾ (Leave Rules)</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                    <button onclick="askPrompt('അച്ചടക്ക നടപടികളും സസ്പെൻഷൻ ചട്ടങ്ങളും (Rules 65-75) എന്തൊക്കെയാണ്?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>സസ്പെൻഷൻ & അച്ചടക്ക നടപടികൾ</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                    <button onclick="askPrompt('ഹാജർ കുറവ് മാപ്പാക്കൽ (Attendance Condonation Chapter VII) പരിധികൾ എന്തെല്ലാം?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
+                        <span>ഹാജർ കുറവ് മാപ്പാക്കൽ (Condonation)</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+                    </button>
+                </div>
             </div>
 
-            <div class="space-y-2">
-                <h2 class="text-2xl md:text-3xl font-extrabold text-white">
-                    കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER)
-                </h2>
-                <p class="text-sm md:text-base text-slate-400 max-w-md mx-auto">
-                    സ്കൂൾ നിയമങ്ങൾ, അധ്യാപക നിയമനം, സർവീസ് വ്യവസ്ഥകൾ, പ്രമോഷൻ മാനദണ്ഡങ്ങൾ എന്നിവയെല്ലാം അടങ്ങിയ ഡിജിറ്റൽ നോട്ട്ബുക്ക്.
+            <!-- Disclaimer Card -->
+            <div class="bg-amber-950/30 border border-amber-500/30 rounded-2xl p-3.5 text-xs text-amber-200 flex items-start gap-2.5">
+                <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
+                <p class="leading-relaxed">
+                    <strong>ശ്രദ്ധിക്കുക:</strong> ഈ സിസ്റ്റം കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER) അടിസ്ഥാനമാക്കിയുള്ള വിവരങ്ങൾ തത്സമയം നൽകുന്നു. ഔദ്യോഗിക ഫയൽ തീർപ്പാക്കലുകൾക്ക് സർക്കാർ ഗസറ്റ് ഉത്തരവുകൾ പരിശോധിക്കുക.
                 </p>
             </div>
+            
+        </div>
 
-            <!-- Action Button -->
-            <div class="pt-2">
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
-                   target="_blank" 
-                   class="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-base font-bold transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/40">
-                    <i class="fa-solid fa-comments text-lg"></i>
-                    <span>ചോദ്യങ്ങൾ ചോദിക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-75"></i>
-                </a>
+        <!-- Right Side: Interactive Chat Box (8 cols) -->
+        <div class="lg:col-span-8 flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+            
+            <!-- Chat Header -->
+            <div class="px-5 py-3 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-slate-200">KER ഇന്റലിജന്റ് ചാറ്റ്ബോട്ട്</span>
+                </div>
+                <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1">
+                    <i class="fa-regular fa-trash-can"></i> ചാറ്റ് റീസെറ്റ്
+                </button>
             </div>
 
-            <!-- Features Info -->
-            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800/80 text-left">
-                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-800/60">
-                    <p class="text-xs text-emerald-400 font-bold mb-1">
-                        <i class="fa-solid fa-check-circle mr-1"></i> കൃത്യമായ റഫറൻസുകൾ
-                    </p>
-                    <p class="text-[11px] text-slate-400">ഓരോ ഉത്തരത്തിനും KER Chapter, Rule നമ്പർ എന്നിവ സഹിതം ലഭിക്കുന്നു.</p>
+            <!-- Messages Stream Area -->
+            <div id="chatBox" class="chat-scroll overflow-y-auto p-4 md:p-6 space-y-4">
+                
+                <!-- Welcome Message -->
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-200 max-w-2xl leading-relaxed border border-slate-700/50 shadow">
+                        <p class="font-bold text-emerald-400 mb-1">നമസ്കാരം! KER Ready Reckoner AI-ലേക്ക് സ്വാഗതം.</p>
+                        <p>കേരള എജ്യുക്കേഷൻ റൂൾസുമായി (KER) ബന്ധപ്പെട്ട ഏത് സംശയങ്ങളും നിങ്ങൾക്ക് ഇവിടെ നേരിട്ട് ചോദിക്കാം. അധ്യായങ്ങളും റൂൾ നമ്പറുകളും സഹിതം ഇവിടെത്തന്നെ കൃത്യമായ മറുപടി ലഭിക്കും.</p>
+                    </div>
                 </div>
-                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-800/60">
-                    <p class="text-xs text-emerald-400 font-bold mb-1">
-                        <i class="fa-solid fa-headphones mr-1"></i> ഓഡിയോ അവലോകനം
-                    </p>
-                    <p class="text-[11px] text-slate-400">KER റൂളുകൾ ചർച്ച ചെയ്യുന്ന പോഡ്‌കാസ്റ്റ് ഓഡിയോ കേൾക്കാം.</p>
-                </div>
+
+            </div>
+
+            <!-- Chat Input Footer -->
+            <div class="p-3 md:p-4 border-t border-slate-800 bg-slate-950/80">
+                <form id="queryForm" onsubmit="handleChat(event)" class="flex items-center gap-2">
+                    <div class="relative flex-1">
+                        <input 
+                            type="text" 
+                            id="queryInput" 
+                            placeholder="KER ചട്ടങ്ങളെക്കുറിച്ച് എന്തും ഇവിടെ ചോദിക്കാം (ഉദാ: Rule 43, HM പ്രമോഷൻ, Leave rules)..." 
+                            class="w-full pl-4 pr-10 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-xs md:text-sm text-white placeholder-slate-400 transition shadow-inner"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs md:text-sm font-semibold transition flex items-center gap-2 shadow-sm shrink-0">
+                        <span>ചോദിക്കുക</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
             </div>
 
         </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
-        <p>KER Ready Reckoner Assistant • ഔദ്യോഗിക ആവശ്യങ്ങൾക്ക് സർക്കാർ ഗസറ്റ് പരിശോധിക്കുക.</p>
-    </footer>
+    <!-- Frontend Rule Database & Intelligent Answer Engine -->
+    <script>
+        const KER_DATABASE = [
+            {
+                keywords: ["headmaster", "hm", "promotion", "ഹെഡ്മാസ്റ്റർ", "പ്രമോഷൻ", "44a", "44 a", "graduate service", "അക്കൗണ്ട് ടെസ്റ്റ്"],
+                title: "ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ നിബന്ധനകൾ (High Schools & Training Schools)",
+                chapter: "Chapter XIV(A), Rule 44A & Rule 45",
+                summary: `**ഹൈസ്കൂൾ പ്രധാനാധ്യാപക നിയമനം (Rule 44A):**
+1. **സർവീസ് യോഗ്യത:** കുറഞ്ഞത് 12 വർഷത്തെ തുടർച്ചയായ ഗ്രാജ്വേറ്റ് സർവീസ് (Continuous Graduate Service). ബി.എഡ്./ബി.ടി. യോഗ്യത നേടിയതിനു ശേഷമുള്ള HSA സർവീസ് ആയിരിക്കണം.
+2. **ടെസ്റ്റ് യോഗ്യതകൾ:**
+   - Kerala Education Act & Rules (KER) ടെസ്റ്റ് ജയിച്ചിരിക്കണം.
+   - KPSC നടത്തുന്ന അക്കൗണ്ട് ടെസ്റ്റ് (Account Test - Lower) ജയിച്ചിരിക്കണം.
+3. **പ്രായപരിധി ഇളവ്:** 50 വയസ്സ് പൂർത്തിയായ അധ്യാപകർക്ക് ടെസ്റ്റ് യോഗ്യതകളിൽ സ്ഥിരമായ ഇളവുണ്ട് (Permanently Exempted). എന്നാൽ യോഗ്യത നേടിയവരും ഇല്ലാത്തവരും ഒരേ സീനിയോറിറ്റി ലിസ്റ്റിൽ ഉള്ളപ്പോൾ ടെസ്റ്റ് പാസ്സായവർക്ക് മുൻഗണന (Preference) ഉണ്ടായിരിക്കും.
+4. **Teacher-in-charge (Rule 45C):** നിശ്ചിത സർവീസ് യോഗ്യതയുള്ളവർ ഇല്ലാത്ത പക്ഷം ഏറ്റവും മുതിർന്ന അധ്യാപകനെ Teacher-in-charge ആയി ചുമതലപ്പെടുത്താം.`
+            },
+            {
+                keywords: ["rule 43", "43", "സീനിയോറിറ്റി", "vacancies", "vacancy", "ഒഴിവുകൾ"],
+                title: "ഉയർന്ന തസ്തികകളിലേക്കുള്ള സ്ഥാനക്കയറ്റം (Rule 43)",
+                chapter: "Chapter XIV(A), Rule 43",
+                summary: `**റൂൾ 43 പ്രകാരമുള്ള പ്രമോഷൻ മാനദണ്ഡങ്ങൾ:**
+1. ഒരു സ്കൂളിൽ ഒരു ഉയർന്ന കാറ്റഗറിയിലോ ഗ്രേഡിലോ ഒഴിവ് വരുമ്പോൾ, സ്കൂളിലെ ആ തസ്തികയ്ക്ക് യോഗ്യതയുള്ള ഏറ്റവും സീനിയറായ അധ്യാപകന് സ്ഥാനക്കയറ്റത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.
+2. ഒരു മാനേജ്മെന്റിന് കീഴിൽ ഒന്നിലധികം സ്കൂളുകളുണ്ടെങ്കിൽ കംബൈൻഡ് സീനിയോറിറ്റി ലിസ്റ്റ് (Combined Seniority List under Rule 34) അടിസ്ഥാനമാക്കിയാണ് സ്ഥാനക്കയറ്റം നൽകേണ്ടത്.
+3. സീനിയറായ വ്യക്തിയെ മറികടന്ന് പ്രമോഷൻ നൽകാൻ പാടില്ല. സീനിയർ വ്യക്തി സ്ഥാനം നിരസിക്കുകയാണെങ്കിൽ (Renunciation of Claim) ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ അനുമതിയോടെ മാത്രമേ അത് സാധുവാകൂ.`
+            },
+            {
+                keywords: ["51a", "51 a", "മുൻഗണന", "താൽക്കാലിക", "റിലീവ്", "relief", "preferential"],
+                title: "പിരിച്ചുവിടപ്പെട്ട അധ്യാപകരുടെ പുനർനിയമന അവകാശം (Rule 51A)",
+                chapter: "Chapter XIV(A), Rule 51A",
+                summary: `**റൂൾ 51A ക്ലെയിം വ്യവസ്ഥകൾ:**
+1. അംഗീകൃത തസ്തികയിൽ നിയമനം ലഭിച്ച് ഡിവിഷൻ കുറവ് മൂലമോ, തസ്തിക നഷ്ടപ്പെട്ടതു മൂലമോ, അവധി ഒഴിവായതു മൂലമോ റിലീവ് ചെയ്യപ്പെട്ട താൽക്കാലിക/സ്ഥിര അധ്യാപകർക്ക് ഭാവിയിൽ അതേ സ്കൂളിലോ മാനേജ്മെന്റിന് കീഴിലോ ഉണ്ടാകുന്ന ഒഴിവുകളിൽ പുനർനിയമനത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.
+2. ഭേദഗതി പ്രകാരം കുറഞ്ഞത് ഒരു അധ്യയന വർഷത്തിലെ ഒരു നിശ്ചിത കാലയളവിലെ അംഗീകൃത സർവീസ് ഉണ്ടായിരിക്കണം.
+3. പുതിയ നിയമനങ്ങൾ നടത്തുന്നതിന് മുൻപ് നിലവിലുള്ള 51A ക്ലെയിമുകൾ തീർപ്പാക്കേണ്ടത് മാനേജറുടെ നിയമപരമായ ബാധ്യതയാണ്.`
+            },
+            {
+                keywords: ["51b", "51 b", "ആശ്രിത", "മരണപ്പെട്ട", "compassionate", "dying in harness"],
+                title: "ആശ്രിത നിയമനം (Rule 51B)",
+                chapter: "Chapter XIV(A), Rule 51B",
+                summary: `**റൂൾ 51B പ്രകാരമുള്ള ആശ്രിത നിയമനം:**
+1. എയ്ഡഡ് സ്കൂളുകളിൽ സർവീസിലിരിക്കെ മരണപ്പെടുന്ന അധ്യാപകരുടെയും അനധ്യാപക ജീവനക്കാരുടെയും ആശ്രിതർക്ക് (ഭാര്യ/ഭർത്താവ്/മക്കൾ) സ്കൂളിലെ ഭാവി ഒഴിവുകളിൽ നിയമനത്തിന് അർഹതയുണ്ട്.
+2. അർഹതയുള്ള യോഗ്യതകൾ ഉണ്ടെങ്കിൽ മാത്രമേ നിർദ്ദിഷ്ട തസ്തികയിലേക്ക് നിയമനം നൽകാൻ സാധിക്കൂ.
+3. ഗവൺമെന്റ് ജീവനക്കാർക്കുള്ള ആശ്രിത നിയമന മാനദണ്ഡങ്ങൾ തന്നെയാണ് ഇതിലും ബാധകമാകുന്നത്.`
+            },
+            {
+                keywords: ["leave", "casual leave", "അവധി", "മറ്റേണിറ്റി", "maternity", "lwa", "56", "57"],
+                title: "അധ്യാപകരുടെ അവധി ചട്ടങ്ങൾ (Leave Rules)",
+                chapter: "Chapter XIV(A), Rule 56 & KSR Part I",
+                summary: `**അവധി വ്യവസ്ഥകൾ:**
+1. എയ്ഡഡ് സ്കൂൾ അധ്യാപകരുടെ അവധി ആനുകൂല്യങ്ങൾ കേരള സർവീസ് റൂൾസ് (KSR Part I) വ്യവസ്ഥകൾക്ക് വിധേയമാണ്.
+2. **കാഷ്വൽ ലീവ് (Casual Leave):** ഒരു കലണ്ടർ വർഷത്തിൽ 15 ദിവസത്തെ സാധാരണ കാഷ്വൽ ലീവും, അർഹതയുള്ള സ്പെഷ്യൽ കാഷ്വൽ ലീവുകളും അനുവദനീയമാണ്.
+3. **പ്രസവാവധി (Maternity Leave):** വനിതാ ജീവനക്കാർക്ക് നിലവിലെ ഉത്തരവുകൾ പ്രകാരം 180 ദിവസത്തെ പ്രസവാവധിക്ക് അർഹതയുണ്ട്.
+4. **ശമ്പളമില്ലാ അവധി (LWA):** വിദേശത്ത് ജോലി ചെയ്യുന്നതിനോ ഉന്നത പഠനത്തിനോ പ്രത്യേക വ്യവസ്ഥകളോടെ സർക്കാരിന്റെ മുൻകൂർ അനുമതിയോടെ LWA അനുവദിക്കാം.`
+            },
+            {
+                keywords: ["suspension", "സസ്പെൻഷൻ", "അച്ചടക്ക", "disciplinary", "enquiry", "65", "66", "67"],
+                title: "അച്ചടക്ക നടപടികളും സസ്പെൻഷൻ ചട്ടങ്ങളും",
+                chapter: "Chapter XIV(A), Rules 65 മുതൽ 75 വരെ",
+                summary: `**സസ്പെൻഷൻ & അച്ചടക്ക നടപടികൾ:**
+1. ഗുരുതരമായ കൃത്യവിലോപം, പെരുമാറ്റദൂഷ്യം എന്നിവയുണ്ടായാൽ മാനേജർക്ക് ഒരു അധ്യാപകനെ പ്രാഥമികമായി 15 ദിവസത്തേക്ക് സസ്പെൻഡ് ചെയ്യാവുന്നതാണ്.
+2. 15 ദിവസത്തിൽ കൂടുതൽ സസ്പെൻഷൻ നീട്ടണമെങ്കിൽ ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ (AEO / DEO) മുൻകൂർ രേഖാമൂലമുള്ള അനുമതി നിർബന്ധമാണ്.
+3. സസ്പെൻഷൻ കാലയളവിൽ ജീവനക്കാരന് നിർദ്ദിഷ്ട സബ്സിസ്റ്റൻസ് അലവൻസിന് (Subsistence Allowance) അർഹതയുണ്ട്.
+4. കുറ്റപത്രം നൽകി വിശദീകരണം വാങ്ങി നിയമാനുസൃതമായ അന്വേഷണം (Formal Enquiry) പൂർത്തിയാക്കിയേ പിരിച്ചുവിടൽ പോലുള്ള കടുത്ത ശിക്ഷകൾ നൽകാവൂ.`
+            },
+            {
+                keywords: ["condonation", "attendance", "ഹാജർ", "അധ്യയന", "working days", "chapter vii"],
+                title: "അധ്യയന ദിവസങ്ങളും ഹാജർ കുറവ് മാപ്പാക്കലും (Attendance Condonation)",
+                chapter: "Chapter VII, Rules 3 & 9",
+                summary: `**ഹാജർ ചട്ടങ്ങൾ:**
+1. ഒരു അധ്യയന വർഷത്തിൽ സ്കൂളുകൾക്ക് കുറഞ്ഞത് 200 മുതൽ 220 അധ്യയന ദിവസങ്ങൾ ഉണ്ടായിരിക്കണം.
+2. പരീക്ഷ എഴുതുന്നതിനായി ഒരു വിദ്യാർത്ഥിക്ക് കുറഞ്ഞത് 85% ഹാജർ ആവശ്യമാണ്.
+3. **ഹാജർ കുറവ് മാപ്പാക്കൽ (Condonation Limits):**
+   - 15% വരെയുള്ള ഹാജർ കുറവ് മാപ്പാക്കാൻ ഹെഡ്മാസ്റ്റർക്ക് അധികാരമുണ്ട് (ന്യായമായ മെഡിക്കൽ കാരണങ്ങളാൽ).
+   - 15% മുതൽ 25% വരെയുള്ള കുറവ് മാപ്പാക്കാൻ AEO/DEO-യ്ക്ക് അധികാരമുണ്ട്.
+   - ഇതിൽ കൂടുതലുള്ള കുറവുകൾക്ക് പൊതുവിദ്യാഭ്യാസ ഡയറക്ടറുടെ (DGE) പ്രത്യേക അനുമതി വേണം.`
+            },
+            {
+                keywords: ["admission", "tc", "അഡ്മിഷൻ", "വയസ്സ്", "age limit", "chapter vi"],
+                title: "സ്കൂൾ പ്രവേശനം, പ്രായപരിധി, ടി.സി. ചട്ടങ്ങൾ",
+                chapter: "Chapter VI, Admission & Withdrawal",
+                summary: `**പ്രവേശന മാനദണ്ഡങ്ങൾ (Chapter VI):**
+1. ഒന്നാം ക്ലാസ് പ്രവേശനത്തിന് അധ്യയന വർഷം ജൂൺ 1-ന് പൂർത്തിയാകേണ്ട കുറഞ്ഞ പ്രായപരിധി ചട്ടപ്രകാരം നിശ്ചയിക്കപ്പെട്ടിരിക്കുന്നു.
+2. ജനന സർട്ടിഫിക്കറ്റ്, ട്രാൻസ്ഫർ സർട്ടിഫിക്കറ്റ് (TC) എന്നിവ പ്രവേശന സമയത്ത് പരിശോധിക്കണം.
+3. സ്കൂൾ രേഖകളിലെ പേര്, ജനനത്തീയതി എന്നിവ തിരുത്തുന്നത് സംബന്ധിച്ച വ്യവസ്ഥകൾ KER Chapter VI Rule 28-ൽ വ്യക്തമാക്കിയിട്ടുണ്ട്.`
+            },
+            {
+                keywords: ["staff fixation", "division", "സ്റ്റാഫ് ഫിക്സേഷൻ", "ഡിവിഷൻ", "തസ്തിക", "xxiii"],
+                title: "സ്റ്റാഫ് ഫിക്സേഷനും തസ്തിക നിർണ്ണയവും",
+                chapter: "Chapter XXIII, Staff Strength",
+                summary: `**തസ്തിക നിർണ്ണയം (Chapter XXIII):**
+1. സ്കൂളിലെ കുട്ടികളുടെ ആറാം പ്രവൃത്തിദിനത്തിലെ ഹാജർ നില (UID അധിഷ്ഠിതം) അടിസ്ഥാനമാക്കിയാണ് വാർഷിക സ്റ്റാഫ് ഫിക്സേഷൻ നടത്തുന്നത്.
+2. എൽ.പി., യു.പി., ഹൈസ്കൂൾ തലങ്ങളിൽ നിർദ്ദിഷ്ട Pupil-Teacher Ratio (PTR) പ്രകാരമാണ് തസ്തികകൾ അനുവദിക്കുന്നത്.
+3. അധിക തസ്തികകൾ അനുവദിക്കുന്നതും, അധ്യാപക ബാങ്ക് (Teacher Bank) വഴിയുള്ള സംരക്ഷണവും സർക്കാരിന്റെ കാലികമായ ഉത്തരവുകൾക്ക് വിധേയമാണ്.`
+            }
+        ];
 
+        function handleChat(event) {
+            event.preventDefault();
+            const input = document.getElementById('queryInput');
+            const query = input.value.trim();
+            if (!query) return;
+
+            appendMessage('user', query);
+            input.value = '';
+
+            const loadingId = appendLoading();
+            setTimeout(() => {
+                removeElement(loadingId);
+                const answer = findAnswer(query);
+                appendMessage('assistant', answer);
+            }, 500);
+        }
+
+        function askPrompt(text) {
+            document.getElementById('queryInput').value = text;
+            handleChat(new Event('submit'));
+        }
+
+        function findAnswer(query) {
+            const q = query.toLowerCase();
+            let bestMatch = null;
+            let highestScore = 0;
+
+            for (const item of KER_DATABASE) {
+                let score = 0;
+                for (const kw of item.keywords) {
+                    if (q.includes(kw.toLowerCase())) {
+                        score += 3;
+                    }
+                }
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestMatch = item;
+                }
+            }
+
+            if (bestMatch && highestScore > 0) {
+                return `### ${bestMatch.title}
+**അധ്യായം / ചട്ടം:** \`${bestMatch.chapter}\`
+
+${bestMatch.summary}
+
+---
+*കൂടുതൽ വിശദാംശങ്ങൾക്ക് കേരള എജ്യുക്കേഷൻ ആക്ട് & റൂൾസിലെ നിർദ്ദിഷ്ട അധ്യായങ്ങൾ പരിശോധിക്കുക.*`;
+            } else {
+                return `നിങ്ങൾ ചോദിച്ച **"${query}"** എന്ന ചോദ്യവുമായി നേരിട്ട് ബന്ധപ്പെട്ട റൂൾ ഡാറ്റാബേസിൽ കണ്ടെത്താൻ കഴിഞ്ഞില്ല.
+
+ദയവായി താഴെ പറയുന്ന പ്രധാന കീവേഡുകൾ ഉപയോഗിച്ച് വീണ്ടും ചോദിച്ചു നോക്കൂ:
+- **Rule 44A അല്ലെങ്കിൽ ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ**
+- **Rule 43 സ്ഥാനക്കയറ്റങ്ങൾ**
+- **Rule 51A അല്ലെങ്കിൽ 51B മുൻഗണനാ നിയമനം**
+- **അവധി നിയമങ്ങൾ (Leave Rules)**
+- **സസ്പെൻഷൻ നടപടികൾ (Rules 65-75)**
+- **ഹാജർ കുറവ് മാപ്പാക്കൽ (Chapter VII)**`;
+            }
+        }
+
+        function appendMessage(sender, text) {
+            const box = document.getElementById('chatBox');
+            const div = document.createElement('div');
+            div.className = sender === 'user' ? 'flex items-start justify-end gap-3' : 'flex items-start gap-3';
+
+            const formatted = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            if (sender === 'user') {
+                div.innerHTML = `
+                    <div class="bg-emerald-600 text-white rounded-2xl rounded-tr-none p-3.5 text-xs md:text-sm max-w-xl leading-relaxed shadow">
+                        ${formatted}
+                    </div>
+                    <div class="w-8 h-8 rounded-xl bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                `;
+            } else {
+                div.innerHTML = `
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-200 max-w-2xl leading-relaxed border border-slate-700/50 shadow">
+                        ${formatted}
+                    </div>
+                `;
+            }
+
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function appendLoading() {
+            const id = 'loader_' + Math.random().toString(36).substring(2, 9);
+            const box = document.getElementById('chatBox');
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = 'flex items-start gap-3';
+            div.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-slate-400 flex items-center gap-2 border border-slate-700/50">
+                    <i class="fa-solid fa-circle-notch fa-spin text-emerald-400 text-sm"></i>
+                    <span>KER ചട്ടങ്ങൾ പരിശോധിക്കുന്നു...</span>
+                </div>
+            `;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+            return id;
+        }
+
+        function removeElement(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function clearChat() {
+            const box = document.getElementById('chatBox');
+            box.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-200 max-w-2xl leading-relaxed border border-slate-700/50 shadow">
+                        <p class="font-bold text-emerald-400 mb-1">ചാറ്റ് റീസെറ്റ് ചെയ്തു.</p>
+                        <p>കേരള എജ്യുക്കേഷൻ റൂൾസുമായി ബന്ധപ്പെട്ട ഏത് സംശയങ്ങളും വീണ്ടും ചോദിക്കാം.</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
