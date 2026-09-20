@@ -3,135 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KER Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് പോർട്ടൽ</title>
+    <title>KER AI Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് ചാറ്റ്</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', 'Manjari', sans-serif;
-            background-color: #f8fafc;
+            background-color: #0f172a;
+        }
+        .embedded-frame {
+            height: calc(100vh - 80px);
+            width: 100%;
+            border: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-slate-800">
+<body class="min-h-screen flex flex-col text-slate-100">
 
-    <!-- Header Navigation -->
-    <header class="bg-gradient-to-r from-emerald-900 via-teal-900 to-emerald-950 text-white shadow-lg border-b border-emerald-800 sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+    <!-- Top Header -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-30 shadow-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-2xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-emerald-300 text-xl font-bold">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold tracking-tight">KER Ready Reckoner</h1>
-                    <p class="text-xs text-emerald-200">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഡിജിറ്റൽ ഹാൻഡ്‌ബുക്ക്</p>
+                    <h1 class="text-base md:text-lg font-bold tracking-tight text-white">KER AI Ready Reckoner</h1>
+                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഇന്റലിജന്റ് അസിസ്റ്റന്റ്</p>
                 </div>
             </div>
-            <a href="https://kerr-h1wc.onrender.com/" 
-               target="_blank" 
-               class="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs md:text-sm font-bold shadow-md transition transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-bolt text-amber-900"></i>
-                <span>COMPLETE  KER </span>
-            </a>
+            
+            <div class="flex items-center space-x-2">
+                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
+                   target="_blank" 
+                   class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                    <span class="hidden sm:inline">പൂർണ്ണ സ്ക്രീനിൽ കാണുക</span>
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-6xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
-
-        <!-- Hero Section -->
-        <div class="bg-gradient-to-br from-white to-emerald-50/70 rounded-3xl p-6 md:p-8 border border-emerald-100 shadow-sm relative overflow-hidden">
-            <div class="max-w-3xl relative z-10 space-y-4">
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-900 text-xs font-bold rounded-full uppercase tracking-wider inline-flex items-center gap-1.5 border border-emerald-200">
-                    <i class="fa-solid fa-circle-check text-emerald-600"></i> KER ക്ലൗഡ് ഡാറ്റാബേസ് ലഭ്യമാണ്
-                </span>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight">
-                    കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER) സംശയങ്ങൾക്ക് ആധികാരിക AI മറുപടി
-                </h2>
-                <p class="text-sm md:text-base text-slate-600 leading-relaxed">
-                    കേരള സ്കൂൾ വിദ്യാഭ്യാസ ചട്ടങ്ങൾ, അധ്യാപക നിയമനം, സർവീസ് വ്യവസ്ഥകൾ, പ്രമോഷൻ മാനദണ്ഡങ്ങൾ എന്നിവയുമായി ബന്ധപ്പെട്ട സംശയങ്ങൾക്ക് Google Notebook വഴി അധ്യായങ്ങളും ചട്ടങ്ങളും റഫറൻസ് സഹിതം തൽക്ഷണം ഉത്തരം നേടാം.
-                </p>
-                <div class="pt-2">
-                    <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
-                       target="_blank" 
-                       class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm shadow-lg shadow-emerald-700/20 transition transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-comments text-base"></i>
-                        <span>KER നോട്ട്ബുക്കിൽ നേരിട്ട് ചോദ്യം ചോദിക്കുക</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-80"></i>
-                    </a>
-                </div>
-            </div>
-            <i class="fa-solid fa-book-bookmark absolute -right-6 -bottom-6 text-9xl text-emerald-950/5 pointer-events-none"></i>
-        </div>
-
-        <!-- Features Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-emerald-500 transition">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-3">
-                    <i class="fa-solid fa-headphones"></i>
-                </div>
-                <h3 class="font-bold text-slate-800 text-base mb-1">ഓഡിയോ ഓവർവ്യൂ (Audio Overview)</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    KER ചട്ടങ്ങളെക്കുറിച്ചുള്ള ആഴത്തിലുള്ള പോഡ്‌കാസ്റ്റ് ചർച്ചകൾ കേൾക്കാനും വിവരങ്ങൾ എളുപ്പത്തിൽ ഗ്രഹിക്കാനും സാധിക്കും.
-                </p>
-            </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-emerald-500 transition">
-                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg mb-3">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <h3 class="font-bold text-slate-800 text-base mb-1">അധ്യായങ്ങളും റൂൾ നമ്പറുകളും</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    ഓരോ ചോദ്യത്തിനും മറുപടിയോടൊപ്പം ഏത് Chapter, ഏത് Rule അടിസ്ഥാനമാക്കിയാണെന്ന കൃത്യമായ സൈറ്റേഷനുകൾ ലഭിക്കുന്നു.
-                </p>
-            </div>
-
-            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:border-emerald-500 transition">
-                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg mb-3">
-                    <i class="fa-solid fa-file-shield"></i>
-                </div>
-                <h3 class="font-bold text-slate-800 text-base mb-1">വിശ്വസനീയമായ ഉത്തരങ്ങൾ</h3>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    അപ്‌ലോഡ് ചെയ്തിട്ടുള്ള KER ഒറിജിനൽ രേഖകളിൽ നിന്ന് മാത്രം ഉത്തരം നൽകുന്നതിനാൽ തെറ്റായ വിവരങ്ങൾ ഒഴിവാക്കുന്നു.
-                </p>
-            </div>
-
-        </div>
-
-        <!-- Quick Reference Links -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-            <h3 class="font-bold text-slate-900 text-base md:text-lg mb-4 flex items-center gap-2">
-                <i class="fa-solid fa-list-check text-emerald-700"></i> സാധാരണയായി അന്വേഷിക്കുന്ന KER പ്രധാന വിഷയങ്ങൾ
-            </h3>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs md:text-sm">
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" target="_blank" class="p-3.5 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 transition flex items-center justify-between">
-                    <span><strong>Chapter XIV-A Rule 43:</strong> അദ്ധ്യാപക പ്രമോഷൻ മാനദണ്ഡങ്ങൾ</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-emerald-600"></i>
-                </a>
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" target="_blank" class="p-3.5 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 transition flex items-center justify-between">
-                    <span><strong>Chapter XIV-A Rule 51A / 51B:</strong> മുൻഗണനാ നിയമനങ്ങൾ</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-emerald-600"></i>
-                </a>
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" target="_blank" class="p-3.5 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 transition flex items-center justify-between">
-                    <span><strong>Chapter XIV-C:</strong> പ്രധാനാധ്യാപകരുടെ യോഗ്യതയും നിയമനവും</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-emerald-600"></i>
-                </a>
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" target="_blank" class="p-3.5 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 transition flex items-center justify-between">
-                    <span><strong>Leave Rules (Chapter XIV):</strong> അവധി നിയമങ്ങളും ആനുകൂല്യങ്ങളും</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-emerald-600"></i>
-                </a>
-            </div>
-        </div>
-
+    <!-- Embedded Interactive Interface -->
+    <main class="flex-1 w-full bg-slate-950 relative">
+        <iframe 
+            src="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
+            class="embedded-frame"
+            allow="clipboard-write; autoplay"
+            title="KER AI Chat Assistant">
+        </iframe>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-4 mt-auto text-center text-xs text-slate-500">
-        <p>കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER) റഫറൻസ് പോർട്ടൽ • ഔദ്യോഗിക ഫയൽ ആവശ്യങ്ങൾക്ക് ഒറിജിനൽ ഗസറ്റ് ഉത്തരവുകൾ റഫർ ചെയ്യുക.</p>
-    </footer>
 
 </body>
 </html>
