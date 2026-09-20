@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KER Ready Reckoner & Document AI | കേരള എജ്യുക്കേഷൻ റൂൾസ് അസിസ്റ്റന്റ്</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Manjari', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chat-container {
+            height: calc(100vh - 220px);
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                height: calc(100vh - 290px);
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Header Navigation -->
+    <header class="bg-gradient-to-r from-emerald-800 via-teal-800 to-cyan-900 text-white shadow-md border-b border-emerald-950/20 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-emerald-300 text-xl font-bold">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold tracking-tight">KER Ready Reckoner AI</h1>
+                    <p class="text-xs text-emerald-200">കേരള എജ്യുക്കേഷൻ റൂൾസ് & ഫയൽ അനലൈസർ</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button id="openSettingsBtn" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs md:text-sm font-medium transition flex items-center gap-1.5 border border-white/15">
+                    <i class="fa-solid fa-gear"></i> <span>API Key സജ്ജീകരിക്കുക</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Left Sidebar: Document Upload & Quick Tools (4 cols) -->
+        <div class="lg:col-span-4 space-y-4">
+            
+            <!-- Upload Box -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="font-bold text-slate-800 text-sm md:text-base flex items-center gap-2">
+                        <i class="fa-solid fa-file-pdf text-rose-500"></i> ഡോക്യുമെന്റ് അപ്‌ലോഡ്
+                    </h2>
+                    <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-medium">PDF Only</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-3 leading-relaxed">
+                    KER പിഡിഎഫോ, സ്കൂൾ ഉത്തരവുകളോ, സർക്കുലറുകളോ ഇവിടെ അപ്‌ലോഡ് ചെയ്താൽ AI അതിൽ നിന്ന് ചോദ്യങ്ങൾക്ക് ഉത്തരം നൽകും.
+                </p>
+
+                <!-- Dropzone -->
+                <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 hover:bg-emerald-50/40 rounded-xl p-5 text-center cursor-pointer transition">
+                    <input type="file" id="pdfFileInput" accept="application/pdf" class="hidden">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-700">ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ ഫയൽ ഇവിടെ ഡ്രോപ്പ് ചെയ്യുക</p>
+                    <p class="text-[10px] text-slate-400 mt-1">പരമാവധി ഫയൽ വലിപ്പം: 20 MB</p>
+                </div>
+
+                <!-- Uploaded File Badge -->
+                <div id="fileInfoCard" class="hidden mt-3 p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex items-center justify-between">
+                    <div class="flex items-center space-x-2 overflow-hidden">
+                        <i class="fa-solid fa-file-circle-check text-emerald-600 text-lg"></i>
+                        <div class="truncate">
+                            <p id="uploadedFileName" class="text-xs font-semibold text-emerald-900 truncate">document.pdf</p>
+                            <p class="text-[10px] text-emerald-700">അനലൈസ് ചെയ്തു (സജീവമാണ്)</p>
+                        </div>
+                    </div>
+                    <button id="removeFileBtn" class="text-rose-500 hover:text-rose-700 text-sm p-1 ml-2" title="നീക്കം ചെയ്യുക">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick References / Sample Prompts -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i> മാതൃകാ ചോദ്യങ്ങൾ (Quick Prompts)
+                </h3>
+                <div class="space-y-2">
+                    <button class="quick-prompt-btn w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-900 text-xs text-slate-700 transition border border-slate-100 flex items-center justify-between group">
+                        <span>KER Chapter XIV-A Rule 43 പ്രമോഷൻ മാനദണ്ഡങ്ങൾ എന്തൊക്കെയാണ്?</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600"></i>
+                    </button>
+                    <button class="quick-prompt-btn w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-900 text-xs text-slate-700 transition border border-slate-100 flex items-center justify-between group">
+                        <span>അൺ-എയ്ഡഡ് സ്കൂളുകളിലെ അധ്യാപക നിയമന വ്യവസ്ഥകൾ വിശദീകരിക്കാമോ?</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600"></i>
+                    </button>
+                    <button class="quick-prompt-btn w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-900 text-xs text-slate-700 transition border border-slate-100 flex items-center justify-between group">
+                        <span>അപ്‌ലോഡ് ചെയ്ത ഈ ഫയലിലെ പ്രധാന ഉത്തരവുകൾ സംഗ്രഹിക്കുക.</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600"></i>
+                    </button>
+                    <button class="quick-prompt-btn w-full text-left p-2.5 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-900 text-xs text-slate-700 transition border border-slate-100 flex items-center justify-between group">
+                        <span>അവധി ആനുകൂല്യങ്ങളും ലീവ് നിയമങ്ങളും (Leave Rules - Chapter XIV) എന്തെല്ലാമാണ്?</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400 group-hover:text-emerald-600"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Disclaimer Card -->
+            <div class="bg-amber-50 rounded-2xl border border-amber-200 p-3.5 text-amber-900 text-xs flex items-start gap-2.5">
+                <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5"></i>
+                <p class="leading-relaxed">
+                    <strong>ശ്രദ്ധിക്കുക:</strong> ഇതൊരു AI അസിസ്റ്റന്റാണ്. ഔദ്യോഗിക ഫയൽ തീർപ്പാക്കലുകൾക്കും നിയമപരമായ ആവശ്യങ്ങൾക്കും ഗവൺമെന്റ് ഗസറ്റ് / KER ഒറിജിനൽ ചട്ടങ്ങൾ നിർബന്ധമായും പരിശോധിക്കുക.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Interactive Chat Box (8 cols) -->
+        <div class="lg:col-span-8 flex flex-col bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            
+            <!-- Chat Header -->
+            <div class="px-5 py-3 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-slate-700">KER ഇന്റലിജന്റ് ചാറ്റ്ബോട്ട് ഓൺലൈൻ</span>
+                </div>
+                <button id="clearChatBtn" class="text-xs text-slate-500 hover:text-rose-600 transition flex items-center gap-1">
+                    <i class="fa-regular fa-trash-can"></i> ചാറ്റ് ക്ലിയർ ചെയ്യുക
+                </button>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div id="chatMessages" class="chat-container overflow-y-auto p-4 md:p-6 space-y-4">
+                
+                <!-- Assistant Welcome Message -->
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center shrink-0 text-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-800 max-w-2xl leading-relaxed shadow-sm">
+                        <p class="font-bold text-emerald-800 mb-1">സ്വാഗതം! KER Ready Reckoner AI-ലേക്ക് നമസ്കാരം.</p>
+                        <p>കേരള എജ്യുക്കേഷൻ റൂൾസുമായി (KER) ബന്ധപ്പെട്ട ഏത് സംശയങ്ങളും നിങ്ങൾക്ക് ഇവിടെ ചോദിക്കാം. കൂടാതെ നിങ്ങളുടെ പക്കലുള്ള KER പിഡിഎഫുകളോ ഉത്തരവുകളോ ഇടത് വശത്ത് അപ്‌ലോഡ് ചെയ്തും ചോദ്യങ്ങൾ ചോദിക്കാവുന്നതാണ്.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Chat Input Footer -->
+            <div class="p-3 md:p-4 border-t border-slate-200 bg-white">
+                <form id="chatForm" class="flex items-center gap-2">
+                    <div class="relative flex-1">
+                        <input 
+                            type="text" 
+                            id="userInput" 
+                            placeholder="KER ചട്ടങ്ങളെയോ അപ്‌ലോഡ് ചെയ്ത ഫയലിനെയോ കുറിച്ച് എന്തും ചോദിക്കാം..." 
+                            class="w-full pl-4 pr-10 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-xs md:text-sm transition shadow-inner"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        id="sendBtn"
+                        class="px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs md:text-sm font-semibold transition flex items-center gap-2 shadow-sm shrink-0"
+                    >
+                        <span>ചോദിക്കുക</span>
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Settings / API Key Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-slate-200">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-key text-emerald-600"></i> Google Gemini API Key
+                </h3>
+                <button id="closeSettingsBtn" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                ഗൂഗിൾ എഐ സ്റ്റുഡിയോയിൽ നിന്നും (<a href="https://aistudio.google.com/" target="_blank" class="text-emerald-700 underline font-medium">aistudio.google.com</a>) സൗജന്യമായി ലഭിക്കുന്ന API Key ഇവിടെ നൽകുക. ഇത് നിങ്ങളുടെ ബ്രൗസറിൽ മാത്രമേ സൂക്ഷിക്കപ്പെടുകയുള്ളൂ.
+            </p>
+
+            <input 
+                type="password" 
+                id="customApiKeyInput" 
+                placeholder="AIzaSy..." 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 mb-4 font-mono"
+            >
+
+            <div class="flex justify-end gap-2">
+                <button id="saveKeyBtn" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold">
+                    സേവ് ചെയ്യുക
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Frontend Script -->
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const dropzone = document.getElementById('dropzone');
+        const pdfFileInput = document.getElementById('pdfFileInput');
+        const fileInfoCard = document.getElementById('fileInfoCard');
+        const uploadedFileName = document.getElementById('uploadedFileName');
+        const removeFileBtn = document.getElementById('removeFileBtn');
+        const clearChatBtn = document.getElementById('clearChatBtn');
+        const openSettingsBtn = document.getElementById('openSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const saveKeyBtn = document.getElementById('saveKeyBtn');
+        const customApiKeyInput = document.getElementById('customApiKeyInput');
+
+        const sessionId = "session_" + Math.random().toString(36).substring(2, 9);
+        let storedApiKey = localStorage.getItem('gemini_ker_api_key') || '';
+        if (storedApiKey) {
+            customApiKeyInput.value = storedApiKey;
+        }
+
+        // Quick prompts
+        document.querySelectorAll('.quick-prompt-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                userInput.value = btn.querySelector('span').innerText;
+                userInput.focus();
+            });
+        });
+
+        // Settings Modal
+        openSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('hidden'));
+        closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
+        saveKeyBtn.addEventListener('click', () => {
+            storedApiKey = customApiKeyInput.value.trim();
+            localStorage.setItem('gemini_ker_api_key', storedApiKey);
+            settingsModal.classList.add('hidden');
+            alert('API Key വിജയകരമായി സേവ് ചെയ്തു!');
+        });
+
+        // File upload trigger
+        dropzone.addEventListener('click', () => pdfFileInput.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-emerald-600', 'bg-emerald-50'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-emerald-600', 'bg-emerald-50'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-emerald-600', 'bg-emerald-50');
+            if (e.dataTransfer.files.length) {
+                handleFileUpload(e.dataTransfer.files[0]);
+            }
+        });
+
+        pdfFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        async function handleFileUpload(file) {
+            if (!file.name.toLowerCase().endsWith('.pdf')) {
+                alert('ദയവായി പിഡിഎഫ് (PDF) ഫയലുകൾ മാത്രം അപ്‌ലോഡ് ചെയ്യുക.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('session_id', sessionId);
+
+            dropzone.innerHTML = `<div class="py-3 text-xs text-slate-500"><i class="fa-solid fa-spinner fa-spin text-emerald-600 text-lg mb-1"></i><p>ഫയൽ അപഗ്രഥിക്കുന്നു, ദയവായി കാത്തിരിക്കുക...</p></div>`;
+
+            try {
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || 'Upload failed');
+
+                uploadedFileName.innerText = data.filename;
+                fileInfoCard.classList.remove('hidden');
+                dropzone.classList.add('hidden');
+
+                appendMessage('assistant', `നിങ്ങൾ നൽകിയ **'${data.filename}'** എന്ന ഫയൽ വിജയകരമായി ഉൾപ്പെടുത്തിയിട്ടുണ്ട്. ഇനി ഇതിലെ ഉള്ളടക്കത്തെക്കുറിച്ചോ ചട്ടങ്ങളെക്കുറിച്ചോ ചോദിക്കാം.`);
+            } catch (err) {
+                alert('ഫയൽ അപഗ്രഥിക്കുന്നതിൽ തകരാർ: ' + err.message);
+                resetDropzone();
+            }
+        }
+
+        function resetDropzone() {
+            pdfFileInput.value = '';
+            dropzone.classList.remove('hidden');
+            fileInfoCard.classList.add('hidden');
+            dropzone.innerHTML = `
+                <div class="w-12 h-12 mx-auto rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mb-2">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <p class="text-xs font-semibold text-slate-700">ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ ഫയൽ ഇവിടെ ഡ്രോപ്പ് ചെയ്യുക</p>
+                <p class="text-[10px] text-slate-400 mt-1">പരമാവധി ഫയൽ വലിപ്പം: 20 MB</p>
+            `;
+        }
+
+        removeFileBtn.addEventListener('click', () => {
+            resetDropzone();
+            appendMessage('assistant', 'അപ്‌ലോഡ് ചെയ്ത ഫയൽ നീക്കം ചെയ്തു. പൊതുവായ KER ചട്ടങ്ങളിൽ നിന്ന് മറുപടി നൽകാം.');
+        });
+
+        // Chat submit
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage('user', text);
+            userInput.value = '';
+
+            const loadingBubbleId = appendLoadingBubble();
+            sendBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('query', text);
+            formData.append('session_id', sessionId);
+            if (storedApiKey) {
+                formData.append('api_key', storedApiKey);
+            }
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                removeBubble(loadingBubbleId);
+                sendBtn.disabled = false;
+
+                if (!res.ok) {
+                    appendMessage('assistant', `⚠️ **ക്ഷമിക്കുക:** ${data.detail || 'മറുപടി ലഭ്യമാക്കാൻ കഴിഞ്ഞില്ല.'}`);
+                    return;
+                }
+
+                appendMessage('assistant', data.response);
+            } catch (err) {
+                removeBubble(loadingBubbleId);
+                sendBtn.disabled = false;
+                appendMessage('assistant', '⚠️ സെർവറുമായി ബന്ധപ്പെടാൻ സാധിച്ചില്ല. ദയവായി അല്പം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.');
+            }
+        });
+
+        clearChatBtn.addEventListener('click', () => {
+            chatMessages.innerHTML = '';
+            appendMessage('assistant', 'ചാറ്റ് വിവരങ്ങൾ റീസെറ്റ് ചെയ്തു. പുതിയ സംശയങ്ങൾ ചോദിക്കാം.');
+        });
+
+        function appendMessage(sender, text) {
+            const wrapper = document.createElement('div');
+            wrapper.className = sender === 'user' ? 'flex items-start justify-end gap-3' : 'flex items-start gap-3';
+
+            const formattedText = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            if (sender === 'user') {
+                wrapper.innerHTML = `
+                    <div class="bg-emerald-700 text-white rounded-2xl rounded-tr-none p-3.5 text-xs md:text-sm max-w-xl leading-relaxed shadow-sm">
+                        ${formattedText}
+                    </div>
+                    <div class="w-8 h-8 rounded-lg bg-slate-800 text-white flex items-center justify-center shrink-0 text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                `;
+            } else {
+                wrapper.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center shrink-0 text-sm">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <div class="bg-slate-100 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-800 max-w-2xl leading-relaxed shadow-sm border border-slate-200/50">
+                        ${formattedText}
+                    </div>
+                `;
+            }
+
+            chatMessages.appendChild(wrapper);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function appendLoadingBubble() {
+            const id = 'bubble_' + Math.random().toString(36).substring(2, 9);
+            const wrapper = document.createElement('div');
+            wrapper.id = id;
+            wrapper.className = 'flex items-start gap-3';
+            wrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center shrink-0 text-sm">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+                <div class="bg-slate-100 rounded-2xl rounded-tl-none p-4 text-xs text-slate-600 flex items-center gap-2 border border-slate-200/50">
+                    <i class="fa-solid fa-circle-notch fa-spin text-emerald-600 text-sm"></i>
+                    <span>KER നിയമങ്ങളും രേഖകളും പരിശോധിക്കുന്നു...</span>
+                </div>
+            `;
+            chatMessages.appendChild(wrapper);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return id;
+        }
+
+        function removeBubble(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+    </script>
+</body>
+</html>
