@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KER AI Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് ചാറ്റ്</title>
+    <title>KER Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് AI പോർട്ടൽ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,48 +12,85 @@
             font-family: 'Plus Jakarta Sans', 'Manjari', sans-serif;
             background-color: #0f172a;
         }
-        .embedded-frame {
-            height: calc(100vh - 80px);
-            width: 100%;
-            border: none;
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col text-slate-100">
+<body class="min-h-screen flex flex-col text-slate-100 justify-between">
 
-    <!-- Top Header -->
-    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-30 shadow-md">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Header -->
+    <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-4 sticky top-0 z-30 shadow-md">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
                     <h1 class="text-base md:text-lg font-bold tracking-tight text-white">KER AI Ready Reckoner</h1>
-                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഇന്റലിജന്റ് അസിസ്റ്റന്റ്</p>
+                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഡിജിറ്റൽ ഗൈഡ്</p>
                 </div>
             </div>
             
-            <div class="flex items-center space-x-2">
-                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
-                   target="_blank" 
-                   class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                    <span class="hidden sm:inline">പൂർണ്ണ സ്ക്രീനിൽ കാണുക</span>
-                </a>
-            </div>
+            <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
+               target="_blank" 
+               class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs md:text-sm font-semibold transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+                <span>നോട്ട്ബുക്ക് തുറക്കുക</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
         </div>
     </header>
 
-    <!-- Embedded Interactive Interface -->
-    <main class="flex-1 w-full bg-slate-950 relative">
-        <iframe 
-            src="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
-            class="embedded-frame"
-            allow="clipboard-write; autoplay"
-            title="KER AI Chat Assistant">
-        </iframe>
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 flex flex-col justify-center items-center text-center">
+
+        <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl space-y-6 w-full max-w-2xl">
+            
+            <div class="w-16 h-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+
+            <div class="space-y-2">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">
+                    കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER)
+                </h2>
+                <p class="text-sm md:text-base text-slate-400 max-w-md mx-auto">
+                    സ്കൂൾ നിയമങ്ങൾ, അധ്യാപക നിയമനം, സർവീസ് വ്യവസ്ഥകൾ, പ്രമോഷൻ മാനദണ്ഡങ്ങൾ എന്നിവയെല്ലാം അടങ്ങിയ ഡിജിറ്റൽ നോട്ട്ബുക്ക്.
+                </p>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-2">
+                <a href="https://notebook.google.com/notebook/95c84d4c-8a79-4fad-9bf0-ac42ed1e849d" 
+                   target="_blank" 
+                   class="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-base font-bold transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/40">
+                    <i class="fa-solid fa-comments text-lg"></i>
+                    <span>ചോദ്യങ്ങൾ ചോദിക്കാൻ ഇവിടെ ക്ലിക്ക് ചെയ്യുക</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-75"></i>
+                </a>
+            </div>
+
+            <!-- Features Info -->
+            <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-800/80 text-left">
+                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-800/60">
+                    <p class="text-xs text-emerald-400 font-bold mb-1">
+                        <i class="fa-solid fa-check-circle mr-1"></i> കൃത്യമായ റഫറൻസുകൾ
+                    </p>
+                    <p class="text-[11px] text-slate-400">ഓരോ ഉത്തരത്തിനും KER Chapter, Rule നമ്പർ എന്നിവ സഹിതം ലഭിക്കുന്നു.</p>
+                </div>
+                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-800/60">
+                    <p class="text-xs text-emerald-400 font-bold mb-1">
+                        <i class="fa-solid fa-headphones mr-1"></i> ഓഡിയോ അവലോകനം
+                    </p>
+                    <p class="text-[11px] text-slate-400">KER റൂളുകൾ ചർച്ച ചെയ്യുന്ന പോഡ്‌കാസ്റ്റ് ഓഡിയോ കേൾക്കാം.</p>
+                </div>
+            </div>
+
+        </div>
+
     </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+        <p>KER Ready Reckoner Assistant • ഔദ്യോഗിക ആവശ്യങ്ങൾക്ക് സർക്കാർ ഗസറ്റ് പരിശോധിക്കുക.</p>
+    </footer>
 
 </body>
 </html>
