@@ -3,61 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KER Ready Reckoner | കേരള എജ്യുക്കേഷൻ റൂൾസ് AI ചാറ്റ്</title>
+    <title>KER Reckoner | Kerala Education Rules Digital Assistant</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PDF.js for direct client-side PDF text extraction -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', 'Manjari', sans-serif;
-            background-color: #0f172a;
+            background-color: #0b1329;
         }
         .chat-scroll {
-            height: calc(100vh - 240px);
+            height: calc(100vh - 280px);
         }
         @media (max-width: 768px) {
             .chat-scroll {
-                height: calc(100vh - 310px);
+                height: calc(100vh - 350px);
             }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col text-slate-100">
 
-    <!-- Header -->
-    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3.5 sticky top-0 z-30 shadow-md">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <!-- Top Disclaimer Alert Banner (English) -->
+    <div class="bg-amber-500/10 border-b border-amber-500/30 px-4 py-2 text-[11px] md:text-xs text-amber-200">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation text-amber-400 shrink-0"></i>
+                <span><strong>DISCLAIMER:</strong> This is <strong>NOT</strong> an official government website. Information provided is for reference and educational purposes only. Users must verify all rules with official Government Gazettes. Use at your own discretion and responsibility.</span>
+            </div>
+            <span class="hidden md:inline text-amber-400/80 font-mono text-[10px]">Unofficial Reference Portal</span>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3.5 sticky top-0 z-30 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-bold shadow-inner">
                     <i class="fa-solid fa-scale-balanced"></i>
                 </div>
                 <div>
-                    <h1 class="text-base md:text-lg font-bold tracking-tight text-white">KER AI Ready Reckoner</h1>
-                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് ഇന്റലിജന്റ് അസിസ്റ്റന്റ്</p>
+                    <h1 class="text-base md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        <span>KER Reckoner</span>
+                        <span class="text-[10px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full border border-slate-700">Digital Assistant</span>
+                    </h1>
+                    <p class="text-xs text-emerald-400">കേരള എജ്യുക്കേഷൻ റൂൾസ് & ഫയൽ അനലൈസർ</p>
                 </div>
             </div>
             
             <div class="flex items-center space-x-2">
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>ലൈവ് സിസ്റ്റം തയ്യാറാണ്</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Ready</span>
                 </span>
             </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="max-w-6xl mx-auto px-4 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+    <main class="max-w-7xl mx-auto px-4 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
         
-        <!-- Left Sidebar: Quick Topics & Guidance (4 cols) -->
+        <!-- Left Sidebar: Document Upload & Quick Tools (4 cols) -->
         <div class="lg:col-span-4 space-y-4">
             
+            <!-- Document Upload Box with Auto-Delete Timer -->
+            <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 shadow-sm">
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="font-bold text-white text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-file-arrow-up text-emerald-400"></i> ഡോക്യുമെന്റ് അപ്‌ലോഡ്
+                    </h2>
+                    <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-medium">PDF Support</span>
+                </div>
+                <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+                    സ്കൂൾ ഉത്തരവുകളോ സർക്കുലറുകളോ അപ്‌ലോഡ് ചെയ്താൽ അതിലെ ഉള്ളടക്കം പരിശോധിച്ച് ചോദ്യങ്ങൾക്ക് മറുപടി ലഭിക്കും.
+                </p>
+
+                <!-- Auto-Delete Policy Notice -->
+                <div class="bg-slate-950/60 rounded-xl p-2.5 border border-slate-800 text-[11px] text-slate-400 mb-3 flex items-center justify-between">
+                    <span class="flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+                        <span>ഓട്ടോ ഡിലീറ്റ് കാലാവധി:</span>
+                    </span>
+                    <select id="expiryHoursSelect" onchange="updateExpirySelection()" class="bg-slate-900 text-emerald-300 text-xs rounded border border-slate-700 px-2 py-0.5 focus:outline-none">
+                        <option value="1">1 മണിക്കൂർ</option>
+                        <option value="2" selected>2 മണിക്കൂർ</option>
+                        <option value="6">6 മണിക്കൂർ</option>
+                        <option value="12">12 മണിക്കൂർ</option>
+                    </select>
+                </div>
+
+                <!-- Dropzone Area -->
+                <div id="dropzone" onclick="document.getElementById('pdfInput').click()" class="border-2 border-dashed border-slate-700 hover:border-emerald-500 hover:bg-slate-800/50 rounded-xl p-4 text-center cursor-pointer transition">
+                    <input type="file" id="pdfInput" accept="application/pdf" class="hidden" onchange="handleFileSelect(event)">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-200">ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ ഫയൽ ഇവിടെ ഇടുക</p>
+                    <p class="text-[10px] text-slate-400 mt-1">Maximum size: 25 MB</p>
+                </div>
+
+                <!-- Active Uploaded Document Card (Hidden by default) -->
+                <div id="activeDocCard" class="hidden mt-3 p-3 bg-slate-950 rounded-xl border border-emerald-500/40">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-center gap-2 overflow-hidden">
+                            <i class="fa-solid fa-file-pdf text-rose-400 text-lg shrink-0"></i>
+                            <div class="truncate">
+                                <p id="activeDocName" class="text-xs font-semibold text-white truncate">document.pdf</p>
+                                <p id="activeDocPages" class="text-[10px] text-emerald-400">വിശകലനം പൂർത്തിയായി</p>
+                            </div>
+                        </div>
+                        <button onclick="removeDocument(true)" class="text-rose-400 hover:text-rose-300 text-xs p-1" title="ഇപ്പോൾ തന്നെ നീക്കം ചെയ്യുക">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div class="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+                        <span class="text-slate-400 flex items-center gap-1">
+                            <i class="fa-solid fa-stopwatch text-amber-400"></i> ഓട്ടോ ഡിലീറ്റ്:
+                        </span>
+                        <span id="countdownTimer" class="font-mono text-amber-300 font-semibold">01:59:59</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Topics -->
             <div class="bg-slate-900/90 rounded-2xl border border-slate-800 p-4 shadow-sm">
                 <h3 class="font-bold text-white text-sm mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-bolt text-amber-400"></i> പ്രധാന വിഷയങ്ങൾ (Quick Topics)
                 </h3>
-                <p class="text-xs text-slate-400 mb-3">താഴെ പറയുന്നവയിൽ ക്ലിക്ക് ചെയ്തോ അല്ലെങ്കിൽ നേരിട്ട് ചോദ്യങ്ങൾ ടൈപ്പ് ചെയ്തോ ചോദിക്കാം:</p>
-
                 <div class="space-y-2">
                     <button onclick="askPrompt('ഹൈസ്കൂൾ ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ നിബന്ധനകൾ (Rule 44A) എന്തൊക്കെയാണ്?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
                         <span>HM പ്രമോഷൻ മാനദണ്ഡങ്ങൾ (Rule 44A)</span>
@@ -79,18 +159,16 @@
                         <span>സസ്പെൻഷൻ & അച്ചടക്ക നടപടികൾ</span>
                         <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
                     </button>
-                    <button onclick="askPrompt('ഹാജർ കുറവ് മാപ്പാക്കൽ (Attendance Condonation Chapter VII) പരിധികൾ എന്തെല്ലാം?')" class="w-full text-left p-2.5 rounded-xl bg-slate-800/60 hover:bg-emerald-900/40 hover:border-emerald-500/50 border border-slate-700/60 text-xs text-slate-200 transition flex items-center justify-between">
-                        <span>ഹാജർ കുറവ് മാപ്പാക്കൽ (Condonation)</span>
-                        <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
-                    </button>
                 </div>
             </div>
 
-            <!-- Disclaimer Card -->
-            <div class="bg-amber-950/30 border border-amber-500/30 rounded-2xl p-3.5 text-xs text-amber-200 flex items-start gap-2.5">
-                <i class="fa-solid fa-triangle-exclamation text-amber-400 mt-0.5"></i>
-                <p class="leading-relaxed">
-                    <strong>ശ്രദ്ധിക്കുക:</strong> ഈ സിസ്റ്റം കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER) അടിസ്ഥാനമാക്കിയുള്ള വിവരങ്ങൾ തത്സമയം നൽകുന്നു. ഔദ്യോഗിക ഫയൽ തീർപ്പാക്കലുകൾക്ക് സർക്കാർ ഗസറ്റ് ഉത്തരവുകൾ പരിശോധിക്കുക.
+            <!-- English Privacy & Auto-Deletion Notice -->
+            <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-3.5 text-xs text-slate-400 space-y-1.5">
+                <p class="font-bold text-slate-200 flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> Privacy & Auto-Deletion
+                </p>
+                <p class="text-[11px] leading-relaxed">
+                    Uploaded documents are processed temporarily in your browser session and are automatically scheduled for deletion once the expiry window elapses.
                 </p>
             </div>
             
@@ -103,7 +181,10 @@
             <div class="px-5 py-3 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
                 <div class="flex items-center space-x-2.5">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-xs font-semibold text-slate-200">KER ഇന്റലിജന്റ് ചാറ്റ്ബോട്ട്</span>
+                    <span class="text-xs font-semibold text-slate-200">KER Reckoner Intelligent Chat</span>
+                    <span id="docStatusBadge" class="hidden text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                        <i class="fa-solid fa-link mr-1"></i> ഡോക്യുമെന്റ് കണക്റ്റഡ്
+                    </span>
                 </div>
                 <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-rose-400 transition flex items-center gap-1">
                     <i class="fa-regular fa-trash-can"></i> ചാറ്റ് റീസെറ്റ്
@@ -118,9 +199,9 @@
                     <div class="w-8 h-8 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0 text-sm">
                         <i class="fa-solid fa-scale-balanced"></i>
                     </div>
-                    <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-200 max-w-2xl leading-relaxed border border-slate-700/50 shadow">
-                        <p class="font-bold text-emerald-400 mb-1">നമസ്കാരം! KER Ready Reckoner AI-ലേക്ക് സ്വാഗതം.</p>
-                        <p>കേരള എജ്യുക്കേഷൻ റൂൾസുമായി (KER) ബന്ധപ്പെട്ട ഏത് സംശയങ്ങളും നിങ്ങൾക്ക് ഇവിടെ നേരിട്ട് ചോദിക്കാം. അധ്യായങ്ങളും റൂൾ നമ്പറുകളും സഹിതം ഇവിടെത്തന്നെ കൃത്യമായ മറുപടി ലഭിക്കും.</p>
+                    <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-4 text-xs md:text-sm text-slate-200 max-w-2xl leading-relaxed border border-slate-700/50 shadow space-y-2">
+                        <p class="font-bold text-emerald-400">നമസ്കാരം! KER Reckoner ഡിജിറ്റൽ അസിസ്റ്റന്റിലേക്ക് സ്വാഗതം.</p>
+                        <p>കേരള എജ്യുക്കേഷൻ റൂൾസുമായി (KER) ബന്ധപ്പെട്ട സംശയങ്ങൾ നിങ്ങൾക്ക് ഇവിടെ ചോദിക്കാം. കൂടാതെ നിങ്ങളുടെ പക്കലുള്ള ഉത്തരവുകളോ സർക്കുലറുകളോ ഇടത് വശത്ത് അപ്‌ലോഡ് ചെയ്താൽ ആ രേഖകൾ അപഗ്രഥിച്ചും മറുപടി നൽകുന്നതാണ്.</p>
                     </div>
                 </div>
 
@@ -133,7 +214,7 @@
                         <input 
                             type="text" 
                             id="queryInput" 
-                            placeholder="KER ചട്ടങ്ങളെക്കുറിച്ച് എന്തും ഇവിടെ ചോദിക്കാം (ഉദാ: Rule 43, HM പ്രമോഷൻ, Leave rules)..." 
+                            placeholder="KER ചട്ടങ്ങളെക്കുറിച്ചോ അപ്‌ലോഡ് ചെയ്ത രേഖയെക്കുറിച്ചോ ചോദിക്കാം..." 
                             class="w-full pl-4 pr-10 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-xs md:text-sm text-white placeholder-slate-400 transition shadow-inner"
                             autocomplete="off"
                             required
@@ -152,100 +233,218 @@
 
     </main>
 
-    <!-- Frontend Rule Database & Intelligent Answer Engine -->
+    <!-- Comprehensive English Footer Disclaimer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-4 px-4 text-center text-xs text-slate-400 space-y-1">
+        <p class="font-semibold text-slate-300">KER Reckoner — Unofficial Kerala Education Rules Reference Portal</p>
+        <p class="text-[11px] text-slate-400 max-w-4xl mx-auto leading-relaxed">
+            <strong>Disclaimer:</strong> This website is an independent initiative and is <strong>NOT</strong> affiliated with, endorsed by, or representing the General Education Department, Government of Kerala. All data, interpretations, and answers provided herein are intended solely for general guidance, reference, and informational utility. Users are strictly advised to verify all legal claims, service rules, and notifications against the official Gazette publications. The operators and creators assume no responsibility or liability for decisions made based on this tool.
+        </p>
+    </footer>
+
+    <!-- Frontend Rule Database, Client PDF Parser & Auto-Delete Timer Engine -->
     <script>
+        // KER In-Memory Database
         const KER_DATABASE = [
             {
                 keywords: ["headmaster", "hm", "promotion", "ഹെഡ്മാസ്റ്റർ", "പ്രമോഷൻ", "44a", "44 a", "graduate service", "അക്കൗണ്ട് ടെസ്റ്റ്"],
                 title: "ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ നിബന്ധനകൾ (High Schools & Training Schools)",
                 chapter: "Chapter XIV(A), Rule 44A & Rule 45",
-                summary: `**ഹൈസ്കൂൾ പ്രധാനാധ്യാപക നിയമനം (Rule 44A):**
-1. **സർവീസ് യോഗ്യത:** കുറഞ്ഞത് 12 വർഷത്തെ തുടർച്ചയായ ഗ്രാജ്വേറ്റ് സർവീസ് (Continuous Graduate Service). ബി.എഡ്./ബി.ടി. യോഗ്യത നേടിയതിനു ശേഷമുള്ള HSA സർവീസ് ആയിരിക്കണം.
-2. **ടെസ്റ്റ് യോഗ്യതകൾ:**
-   - Kerala Education Act & Rules (KER) ടെസ്റ്റ് ജയിച്ചിരിക്കണം.
-   - KPSC നടത്തുന്ന അക്കൗണ്ട് ടെസ്റ്റ് (Account Test - Lower) ജയിച്ചിരിക്കണം.
-3. **പ്രായപരിധി ഇളവ്:** 50 വയസ്സ് പൂർത്തിയായ അധ്യാപകർക്ക് ടെസ്റ്റ് യോഗ്യതകളിൽ സ്ഥിരമായ ഇളവുണ്ട് (Permanently Exempted). എന്നാൽ യോഗ്യത നേടിയവരും ഇല്ലാത്തവരും ഒരേ സീനിയോറിറ്റി ലിസ്റ്റിൽ ഉള്ളപ്പോൾ ടെസ്റ്റ് പാസ്സായവർക്ക് മുൻഗണന (Preference) ഉണ്ടായിരിക്കും.
-4. **Teacher-in-charge (Rule 45C):** നിശ്ചിത സർവീസ് യോഗ്യതയുള്ളവർ ഇല്ലാത്ത പക്ഷം ഏറ്റവും മുതിർന്ന അധ്യാപകനെ Teacher-in-charge ആയി ചുമതലപ്പെടുത്താം.`
+                summary: `**ഹൈസ്കൂൾ പ്രധാനാധ്യാപക നിയമനം (Rule 44A):**\n1. **സർവീസ് യോഗ്യത:** കുറഞ്ഞത് 12 വർഷത്തെ തുടർച്ചയായ ഗ്രാജ്വേറ്റ് സർവീസ് (Continuous Graduate Service). ബി.എഡ്./ബി.ടി. യോഗ്യത നേടിയതിനു ശേഷമുള്ള HSA സർവീസ് ആയിരിക്കണം.\n2. **ടെസ്റ്റ് യോഗ്യതകൾ:**\n   - Kerala Education Act & Rules (KER) ടെസ്റ്റ് ജയിച്ചിരിക്കണം.\n   - KPSC നടത്തുന്ന അക്കൗണ്ട് ടെസ്റ്റ് (Account Test - Lower) ജയിച്ചിരിക്കണം.\n3. **പ്രായപരിധി ഇളവ്:** 50 വയസ്സ് പൂർത്തിയായ അധ്യാപകർക്ക് ടെസ്റ്റ് യോഗ്യതകളിൽ സ്ഥിരമായ ഇളവുണ്ട് (Permanently Exempted). എന്നാൽ യോഗ്യത നേടിയവരും ഇല്ലാത്തവരും ഒരേ സീനിയോറിറ്റി ലിസ്റ്റിൽ ഉള്ളപ്പോൾ ടെസ്റ്റ് പാസ്സായവർക്ക് മുൻഗണന (Preference) ഉണ്ടായിരിക്കും.\n4. **Teacher-in-charge (Rule 45C):** നിശ്ചിത സർവീസ് യോഗ്യതയുള്ളവർ ഇല്ലാത്ത പക്ഷം ഏറ്റവും മുതിർന്ന അധ്യാപകനെ Teacher-in-charge ആയി ചുമതലപ്പെടുത്താം.`
             },
             {
                 keywords: ["rule 43", "43", "സീനിയോറിറ്റി", "vacancies", "vacancy", "ഒഴിവുകൾ"],
                 title: "ഉയർന്ന തസ്തികകളിലേക്കുള്ള സ്ഥാനക്കയറ്റം (Rule 43)",
                 chapter: "Chapter XIV(A), Rule 43",
-                summary: `**റൂൾ 43 പ്രകാരമുള്ള പ്രമോഷൻ മാനദണ്ഡങ്ങൾ:**
-1. ഒരു സ്കൂളിൽ ഒരു ഉയർന്ന കാറ്റഗറിയിലോ ഗ്രേഡിലോ ഒഴിവ് വരുമ്പോൾ, സ്കൂളിലെ ആ തസ്തികയ്ക്ക് യോഗ്യതയുള്ള ഏറ്റവും സീനിയറായ അധ്യാപകന് സ്ഥാനക്കയറ്റത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.
-2. ഒരു മാനേജ്മെന്റിന് കീഴിൽ ഒന്നിലധികം സ്കൂളുകളുണ്ടെങ്കിൽ കംബൈൻഡ് സീനിയോറിറ്റി ലിസ്റ്റ് (Combined Seniority List under Rule 34) അടിസ്ഥാനമാക്കിയാണ് സ്ഥാനക്കയറ്റം നൽകേണ്ടത്.
-3. സീനിയറായ വ്യക്തിയെ മറികടന്ന് പ്രമോഷൻ നൽകാൻ പാടില്ല. സീനിയർ വ്യക്തി സ്ഥാനം നിരസിക്കുകയാണെങ്കിൽ (Renunciation of Claim) ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ അനുമതിയോടെ മാത്രമേ അത് സാധുവാകൂ.`
+                summary: `**റൂൾ 43 പ്രകാരമുള്ള പ്രമോഷൻ മാനദണ്ഡങ്ങൾ:**\n1. ഒരു സ്കൂളിൽ ഒരു ഉയർന്ന കാറ്റഗറിയിലോ ഗ്രേഡിലോ ഒഴിവ് വരുമ്പോൾ, സ്കൂളിലെ ആ തസ്തികയ്ക്ക് യോഗ്യതയുള്ള ഏറ്റവും സീനിയറായ അധ്യാപകന് സ്ഥാനക്കയറ്റത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.\n2. ഒരു മാനേജ്മെന്റിന് കീഴിൽ ഒന്നിലധികം സ്കൂളുകളുണ്ടെങ്കിൽ കംബൈൻഡ് സീനിയോറിറ്റി ലിസ്റ്റ് (Combined Seniority List under Rule 34) അടിസ്ഥാനമാക്കിയാണ് സ്ഥാനക്കയറ്റം നൽകേണ്ടത്.\n3. സീനിയറായ വ്യക്തിയെ മറികടന്ന് പ്രമോഷൻ നൽകാൻ പാടില്ല. സീനിയർ വ്യക്തി സ്ഥാനം നിരസിക്കുകയാണെങ്കിൽ (Renunciation of Claim) ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ അനുമതിയോടെ മാത്രമേ അത് സാധുവാകൂ.`
             },
             {
                 keywords: ["51a", "51 a", "മുൻഗണന", "താൽക്കാലിക", "റിലീവ്", "relief", "preferential"],
                 title: "പിരിച്ചുവിടപ്പെട്ട അധ്യാപകരുടെ പുനർനിയമന അവകാശം (Rule 51A)",
                 chapter: "Chapter XIV(A), Rule 51A",
-                summary: `**റൂൾ 51A ക്ലെയിം വ്യവസ്ഥകൾ:**
-1. അംഗീകൃത തസ്തികയിൽ നിയമനം ലഭിച്ച് ഡിവിഷൻ കുറവ് മൂലമോ, തസ്തിക നഷ്ടപ്പെട്ടതു മൂലമോ, അവധി ഒഴിവായതു മൂലമോ റിലീവ് ചെയ്യപ്പെട്ട താൽക്കാലിക/സ്ഥിര അധ്യാപകർക്ക് ഭാവിയിൽ അതേ സ്കൂളിലോ മാനേജ്മെന്റിന് കീഴിലോ ഉണ്ടാകുന്ന ഒഴിവുകളിൽ പുനർനിയമനത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.
-2. ഭേദഗതി പ്രകാരം കുറഞ്ഞത് ഒരു അധ്യയന വർഷത്തിലെ ഒരു നിശ്ചിത കാലയളവിലെ അംഗീകൃത സർവീസ് ഉണ്ടായിരിക്കണം.
-3. പുതിയ നിയമനങ്ങൾ നടത്തുന്നതിന് മുൻപ് നിലവിലുള്ള 51A ക്ലെയിമുകൾ തീർപ്പാക്കേണ്ടത് മാനേജറുടെ നിയമപരമായ ബാധ്യതയാണ്.`
+                summary: `**റൂൾ 51A ക്ലെയിം വ്യവസ്ഥകൾ:**\n1. അംഗീകൃത തസ്തികയിൽ നിയമനം ലഭിച്ച് ഡിവിഷൻ കുറവ് മൂലമോ, തസ്തിക നഷ്ടപ്പെട്ടതു മൂലമോ, അവധി ഒഴിവായതു മൂലമോ റിലീവ് ചെയ്യപ്പെട്ട താൽക്കാലിക/സ്ഥിര അധ്യാപകർക്ക് ഭാവിയിൽ അതേ സ്കൂളിലോ മാനേജ്മെന്റിന് കീഴിലോ ഉണ്ടാകുന്ന ഒഴിവുകളിൽ പുനർനിയമനത്തിന് മുൻഗണനാ അവകാശമുണ്ട്.\n2. ഭേദഗതി പ്രകാരം കുറഞ്ഞത് ഒരു അധ്യയന വർഷത്തിലെ ഒരു നിശ്ചിത കാലയളവിലെ അംഗീകൃത സർവീസ് ഉണ്ടായിരിക്കണം.\n3. പുതിയ നിയമനങ്ങൾ നടത്തുന്നതിന് മുൻപ് നിലവിലുള്ള 51A ക്ലെയിമുകൾ തീർപ്പാക്കേണ്ടത് മാനേജറുടെ നിയമപരമായ ബാധ്യതയാണ്.`
             },
             {
                 keywords: ["51b", "51 b", "ആശ്രിത", "മരണപ്പെട്ട", "compassionate", "dying in harness"],
                 title: "ആശ്രിത നിയമനം (Rule 51B)",
                 chapter: "Chapter XIV(A), Rule 51B",
-                summary: `**റൂൾ 51B പ്രകാരമുള്ള ആശ്രിത നിയമനം:**
-1. എയ്ഡഡ് സ്കൂളുകളിൽ സർവീസിലിരിക്കെ മരണപ്പെടുന്ന അധ്യാപകരുടെയും അനധ്യാപക ജീവനക്കാരുടെയും ആശ്രിതർക്ക് (ഭാര്യ/ഭർത്താവ്/മക്കൾ) സ്കൂളിലെ ഭാവി ഒഴിവുകളിൽ നിയമനത്തിന് അർഹതയുണ്ട്.
-2. അർഹതയുള്ള യോഗ്യതകൾ ഉണ്ടെങ്കിൽ മാത്രമേ നിർദ്ദിഷ്ട തസ്തികയിലേക്ക് നിയമനം നൽകാൻ സാധിക്കൂ.
-3. ഗവൺമെന്റ് ജീവനക്കാർക്കുള്ള ആശ്രിത നിയമന മാനദണ്ഡങ്ങൾ തന്നെയാണ് ഇതിലും ബാധകമാകുന്നത്.`
+                summary: `**റൂൾ 51B പ്രകാരമുള്ള ആശ്രിത നിയമനം:**\n1. എയ്ഡഡ് സ്കൂളുകളിൽ സർവീസിലിരിക്കെ മരണപ്പെടുന്ന അധ്യാപകരുടെയും അനധ്യാപക ജീവനക്കാരുടെയും ആശ്രിതർക്ക് (ഭാര്യ/ഭർത്താവ്/മക്കൾ) സ്കൂളിലെ ഭാവി ഒഴിവുകളിൽ നിയമനത്തിന് അർഹതയുണ്ട്.\n2. അർഹതയുള്ള യോഗ്യതകൾ ഉണ്ടെങ്കിൽ മാത്രമേ നിർദ്ദിഷ്ട തസ്തികയിലേക്ക് നിയമനം നൽകാൻ സാധിക്കൂ.\n3. ഗവൺമെന്റ് ജീവനക്കാർക്കുള്ള ആശ്രിത നിയമന മാനദണ്ഡങ്ങൾ തന്നെയാണ് ഇതിലും ബാധകമാകുന്നത്.`
             },
             {
                 keywords: ["leave", "casual leave", "അവധി", "മറ്റേണിറ്റി", "maternity", "lwa", "56", "57"],
                 title: "അധ്യാപകരുടെ അവധി ചട്ടങ്ങൾ (Leave Rules)",
                 chapter: "Chapter XIV(A), Rule 56 & KSR Part I",
-                summary: `**അവധി വ്യവസ്ഥകൾ:**
-1. എയ്ഡഡ് സ്കൂൾ അധ്യാപകരുടെ അവധി ആനുകൂല്യങ്ങൾ കേരള സർവീസ് റൂൾസ് (KSR Part I) വ്യവസ്ഥകൾക്ക് വിധേയമാണ്.
-2. **കാഷ്വൽ ലീവ് (Casual Leave):** ഒരു കലണ്ടർ വർഷത്തിൽ 15 ദിവസത്തെ സാധാരണ കാഷ്വൽ ലീവും, അർഹതയുള്ള സ്പെഷ്യൽ കാഷ്വൽ ലീവുകളും അനുവദനീയമാണ്.
-3. **പ്രസവാവധി (Maternity Leave):** വനിതാ ജീവനക്കാർക്ക് നിലവിലെ ഉത്തരവുകൾ പ്രകാരം 180 ദിവസത്തെ പ്രസവാവധിക്ക് അർഹതയുണ്ട്.
-4. **ശമ്പളമില്ലാ അവധി (LWA):** വിദേശത്ത് ജോലി ചെയ്യുന്നതിനോ ഉന്നത പഠനത്തിനോ പ്രത്യേക വ്യവസ്ഥകളോടെ സർക്കാരിന്റെ മുൻകൂർ അനുമതിയോടെ LWA അനുവദിക്കാം.`
+                summary: `**അവധി വ്യവസ്ഥകൾ:**\n1. എയ്ഡഡ് സ്കൂൾ അധ്യാപകരുടെ അവധി ആനുകൂല്യങ്ങൾ കേരള സർവീസ് റൂൾസ് (KSR Part I) വ്യവസ്ഥകൾക്ക് വിധേയമാണ്.\n2. **കാഷ്വൽ ലീവ് (Casual Leave):** ഒരു കലണ്ടർ വർഷത്തിൽ 15 ദിവസത്തെ സാധാരണ കാഷ്വൽ ലീവും, അർഹതയുള്ള സ്പെഷ്യൽ കാഷ്വൽ ലീവുകളും അനുവദനീയമാണ്.\n3. **പ്രസവാവധി (Maternity Leave):** വനിതാ ജീവനക്കാർക്ക് നിലവിലെ ഉത്തരവുകൾ പ്രകാരം 180 ദിവസത്തെ പ്രസവാവധിക്ക് അർഹതയുണ്ട്.\n4. **ശമ്പളമില്ലാ അവധി (LWA):** വിദേശത്ത് ജോലി ചെയ്യുന്നതിനോ ഉന്നത പഠനത്തിനോ പ്രത്യേക വ്യവസ്ഥകളോടെ സർക്കാരിന്റെ മുൻകൂർ അനുമതിയോടെ LWA അനുവദിക്കാം.`
             },
             {
                 keywords: ["suspension", "സസ്പെൻഷൻ", "അച്ചടക്ക", "disciplinary", "enquiry", "65", "66", "67"],
                 title: "അച്ചടക്ക നടപടികളും സസ്പെൻഷൻ ചട്ടങ്ങളും",
                 chapter: "Chapter XIV(A), Rules 65 മുതൽ 75 വരെ",
-                summary: `**സസ്പെൻഷൻ & അച്ചടക്ക നടപടികൾ:**
-1. ഗുരുതരമായ കൃത്യവിലോപം, പെരുമാറ്റദൂഷ്യം എന്നിവയുണ്ടായാൽ മാനേജർക്ക് ഒരു അധ്യാപകനെ പ്രാഥമികമായി 15 ദിവസത്തേക്ക് സസ്പെൻഡ് ചെയ്യാവുന്നതാണ്.
-2. 15 ദിവസത്തിൽ കൂടുതൽ സസ്പെൻഷൻ നീട്ടണമെങ്കിൽ ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ (AEO / DEO) മുൻകൂർ രേഖാമൂലമുള്ള അനുമതി നിർബന്ധമാണ്.
-3. സസ്പെൻഷൻ കാലയളവിൽ ജീവനക്കാരന് നിർദ്ദിഷ്ട സബ്സിസ്റ്റൻസ് അലവൻസിന് (Subsistence Allowance) അർഹതയുണ്ട്.
-4. കുറ്റപത്രം നൽകി വിശദീകരണം വാങ്ങി നിയമാനുസൃതമായ അന്വേഷണം (Formal Enquiry) പൂർത്തിയാക്കിയേ പിരിച്ചുവിടൽ പോലുള്ള കടുത്ത ശിക്ഷകൾ നൽകാവൂ.`
+                summary: `**സസ്പെൻഷൻ & അച്ചടക്ക നടപടികൾ:**\n1. ഗുരുതരമായ കൃത്യവിലോപം, പെരുമാറ്റദൂഷ്യം എന്നിവയുണ്ടായാൽ മാനേജർക്ക് ഒരു അധ്യാപകനെ പ്രാഥമികമായി 15 ദിവസത്തേക്ക് സസ്പെൻഡ് ചെയ്യാവുന്നതാണ്.\n2. 15 ദിവസത്തിൽ കൂടുതൽ സസ്പെൻഷൻ നീട്ടണമെങ്കിൽ ബന്ധപ്പെട്ട വിദ്യാഭ്യാസ ഓഫീസറുടെ (AEO / DEO) മുൻകൂർ രേഖാമൂലമുള്ള അനുമതി നിർബന്ധമാണ്.\n3. സസ്പെൻഷൻ കാലയളവിൽ ജീവനക്കാരന് നിർദ്ദിഷ്ട സബ്സിസ്റ്റൻസ് അലവൻസിന് (Subsistence Allowance) അർഹതയുണ്ട്.\n4. കുറ്റപത്രം നൽകി വിശദീകരണം വാങ്ങി നിയമാനുസൃതമായ അന്വേഷണം (Formal Enquiry) പൂർത്തിയാക്കിയേ പിരിച്ചുവിടൽ പോലുള്ള കടുത്ത ശിക്ഷകൾ നൽകാവൂ.`
             },
             {
                 keywords: ["condonation", "attendance", "ഹാജർ", "അധ്യയന", "working days", "chapter vii"],
                 title: "അധ്യയന ദിവസങ്ങളും ഹാജർ കുറവ് മാപ്പാക്കലും (Attendance Condonation)",
                 chapter: "Chapter VII, Rules 3 & 9",
-                summary: `**ഹാജർ ചട്ടങ്ങൾ:**
-1. ഒരു അധ്യയന വർഷത്തിൽ സ്കൂളുകൾക്ക് കുറഞ്ഞത് 200 മുതൽ 220 അധ്യയന ദിവസങ്ങൾ ഉണ്ടായിരിക്കണം.
-2. പരീക്ഷ എഴുതുന്നതിനായി ഒരു വിദ്യാർത്ഥിക്ക് കുറഞ്ഞത് 85% ഹാജർ ആവശ്യമാണ്.
-3. **ഹാജർ കുറവ് മാപ്പാക്കൽ (Condonation Limits):**
-   - 15% വരെയുള്ള ഹാജർ കുറവ് മാപ്പാക്കാൻ ഹെഡ്മാസ്റ്റർക്ക് അധികാരമുണ്ട് (ന്യായമായ മെഡിക്കൽ കാരണങ്ങളാൽ).
-   - 15% മുതൽ 25% വരെയുള്ള കുറവ് മാപ്പാക്കാൻ AEO/DEO-യ്ക്ക് അധികാരമുണ്ട്.
-   - ഇതിൽ കൂടുതലുള്ള കുറവുകൾക്ക് പൊതുവിദ്യാഭ്യാസ ഡയറക്ടറുടെ (DGE) പ്രത്യേക അനുമതി വേണം.`
-            },
-            {
-                keywords: ["admission", "tc", "അഡ്മിഷൻ", "വയസ്സ്", "age limit", "chapter vi"],
-                title: "സ്കൂൾ പ്രവേശനം, പ്രായപരിധി, ടി.സി. ചട്ടങ്ങൾ",
-                chapter: "Chapter VI, Admission & Withdrawal",
-                summary: `**പ്രവേശന മാനദണ്ഡങ്ങൾ (Chapter VI):**
-1. ഒന്നാം ക്ലാസ് പ്രവേശനത്തിന് അധ്യയന വർഷം ജൂൺ 1-ന് പൂർത്തിയാകേണ്ട കുറഞ്ഞ പ്രായപരിധി ചട്ടപ്രകാരം നിശ്ചയിക്കപ്പെട്ടിരിക്കുന്നു.
-2. ജനന സർട്ടിഫിക്കറ്റ്, ട്രാൻസ്ഫർ സർട്ടിഫിക്കറ്റ് (TC) എന്നിവ പ്രവേശന സമയത്ത് പരിശോധിക്കണം.
-3. സ്കൂൾ രേഖകളിലെ പേര്, ജനനത്തീയതി എന്നിവ തിരുത്തുന്നത് സംബന്ധിച്ച വ്യവസ്ഥകൾ KER Chapter VI Rule 28-ൽ വ്യക്തമാക്കിയിട്ടുണ്ട്.`
-            },
-            {
-                keywords: ["staff fixation", "division", "സ്റ്റാഫ് ഫിക്സേഷൻ", "ഡിവിഷൻ", "തസ്തിക", "xxiii"],
-                title: "സ്റ്റാഫ് ഫിക്സേഷനും തസ്തിക നിർണ്ണയവും",
-                chapter: "Chapter XXIII, Staff Strength",
-                summary: `**തസ്തിക നിർണ്ണയം (Chapter XXIII):**
-1. സ്കൂളിലെ കുട്ടികളുടെ ആറാം പ്രവൃത്തിദിനത്തിലെ ഹാജർ നില (UID അധിഷ്ഠിതം) അടിസ്ഥാനമാക്കിയാണ് വാർഷിക സ്റ്റാഫ് ഫിക്സേഷൻ നടത്തുന്നത്.
-2. എൽ.പി., യു.പി., ഹൈസ്കൂൾ തലങ്ങളിൽ നിർദ്ദിഷ്ട Pupil-Teacher Ratio (PTR) പ്രകാരമാണ് തസ്തികകൾ അനുവദിക്കുന്നത്.
-3. അധിക തസ്തികകൾ അനുവദിക്കുന്നതും, അധ്യാപക ബാങ്ക് (Teacher Bank) വഴിയുള്ള സംരക്ഷണവും സർക്കാരിന്റെ കാലികമായ ഉത്തരവുകൾക്ക് വിധേയമാണ്.`
+                summary: `**ഹാജർ ചട്ടങ്ങൾ:**\n1. ഒരു അധ്യയന വർഷത്തിൽ സ്കൂളുകൾക്ക് കുറഞ്ഞത് 200 മുതൽ 220 അധ്യയന ദിവസങ്ങൾ ഉണ്ടായിരിക്കണം.\n2. പരീക്ഷ എഴുതുന്നതിനായി ഒരു വിദ്യാർത്ഥിക്ക് കുറഞ്ഞത് 85% ഹാജർ ആവശ്യമാണ്.\n3. **ഹാജർ കുറവ് മാപ്പാക്കൽ (Condonation Limits):**\n   - 15% വരെയുള്ള ഹാജർ കുറവ് മാപ്പാക്കാൻ ഹെഡ്മാസ്റ്റർക്ക് അധികാരമുണ്ട് (ന്യായമായ മെഡിക്കൽ കാരണങ്ങളാൽ).\n   - 15% മുതൽ 25% വരെയുള്ള കുറവ് മാപ്പാക്കാൻ AEO/DEO-യ്ക്ക് അധികാരമുണ്ട്.\n   - ഇതിൽ കൂടുതലുള്ള കുറവുകൾക്ക് പൊതുവിദ്യാഭ്യാസ ഡയറക്ടറുടെ (DGE) പ്രത്യേക അനുമതി വേണം.`
             }
         ];
 
+        // Document State & Auto-Delete Timers
+        let uploadedDoc = {
+            name: null,
+            text: null,
+            expiryTimestamp: null
+        };
+        let countdownInterval = null;
+
+        // Check if there is saved document in sessionStorage with expiration
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = sessionStorage.getItem('ker_uploaded_doc');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    const now = Date.now();
+                    if (data.expiryTimestamp && data.expiryTimestamp > now) {
+                        uploadedDoc = data;
+                        showDocUI();
+                        startCountdown();
+                    } else {
+                        // Expired
+                        removeDocument(false);
+                    }
+                } catch (e) {
+                    removeDocument(false);
+                }
+            }
+        });
+
+        function updateExpirySelection() {
+            if (uploadedDoc.name) {
+                const hours = parseInt(document.getElementById('expiryHoursSelect').value) || 2;
+                uploadedDoc.expiryTimestamp = Date.now() + (hours * 3600 * 1000);
+                saveDocState();
+                startCountdown();
+            }
+        }
+
+        async function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+                alert("ദയവായി PDF ഫയലുകൾ മാത്രം അപ്‌ലോഡ് ചെയ്യുക.");
+                return;
+            }
+
+            const dropzone = document.getElementById('dropzone');
+            dropzone.innerHTML = `<div class="py-3 text-xs text-slate-300"><i class="fa-solid fa-spinner fa-spin text-emerald-400 text-lg mb-1"></i><p>ഫയൽ അപഗ്രഥിക്കുന്നു, കാത്തിരിക്കുക...</p></div>`;
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                let fullText = "";
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(" ");
+                    fullText += `\n[Page ${i}] ` + pageText;
+                }
+
+                if (!fullText.trim()) {
+                    alert("ഈ പിഡിഎഫിൽ നിന്ന് ടെക്സ്റ്റ് കണ്ടെത്താൻ കഴിഞ്ഞില്ല. സ്കാൻ ചെയ്ത ഇമേജ് ആണെങ്കിൽ OCR ആവശ്യമാണ്.");
+                    resetDropzone();
+                    return;
+                }
+
+                const hours = parseInt(document.getElementById('expiryHoursSelect').value) || 2;
+                uploadedDoc = {
+                    name: file.name,
+                    text: fullText,
+                    pages: pdf.numPages,
+                    expiryTimestamp: Date.now() + (hours * 3600 * 1000)
+                };
+
+                saveDocState();
+                showDocUI();
+                startCountdown();
+
+                appendMessage('assistant', `നിങ്ങൾ നൽകിയ **'${file.name}'** (${pdf.numPages} പേജുകൾ) വിജയകരമായി അപ്‌ലോഡ് ചെയ്തു. ഇതിലെ ഉള്ളടക്കത്തെക്കുറിച്ചുള്ള ചോദ്യങ്ങൾ ഇനി താഴെ ചോദിക്കാം. ഈ ഫയൽ ${hours} മണിക്കൂർ കഴിഞ്ഞാൽ സ്വയം ഡിലീറ്റ് ചെയ്യപ്പെടും.`);
+            } catch (err) {
+                alert("ഫയൽ പ്രോസസ്സ് ചെയ്യുന്നതിൽ തകരാർ: " + err.message);
+                resetDropzone();
+            }
+        }
+
+        function saveDocState() {
+            sessionStorage.setItem('ker_uploaded_doc', JSON.stringify(uploadedDoc));
+        }
+
+        function showDocUI() {
+            document.getElementById('dropzone').classList.add('hidden');
+            const card = document.getElementById('activeDocCard');
+            card.classList.remove('hidden');
+            document.getElementById('activeDocName').innerText = uploadedDoc.name;
+            document.getElementById('activeDocPages').innerText = `${uploadedDoc.pages || 'PDF'} • ആക്റ്റീവ്`;
+            document.getElementById('docStatusBadge').classList.remove('hidden');
+        }
+
+        function resetDropzone() {
+            document.getElementById('pdfInput').value = '';
+            document.getElementById('dropzone').classList.remove('hidden');
+            document.getElementById('activeDocCard').classList.add('hidden');
+            document.getElementById('docStatusBadge').classList.add('hidden');
+            document.getElementById('dropzone').innerHTML = `
+                <input type="file" id="pdfInput" accept="application/pdf" class="hidden" onchange="handleFileSelect(event)">
+                <div class="w-10 h-10 mx-auto rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-2">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <p class="text-xs font-semibold text-slate-200">ക്ലിക്ക് ചെയ്യുക അല്ലെങ്കിൽ ഫയൽ ഇവിടെ ഇടുക</p>
+                <p class="text-[10px] text-slate-400 mt-1">Maximum size: 25 MB</p>
+            `;
+        }
+
+        function removeDocument(userTriggered = true) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            uploadedDoc = { name: null, text: null, expiryTimestamp: null };
+            sessionStorage.removeItem('ker_uploaded_doc');
+            resetDropzone();
+            if (userTriggered) {
+                appendMessage('assistant', 'അപ്‌ലോഡ് ചെയ്ത രേഖ നീക്കം ചെയ്തു. ഇനി പൊതുവായ KER ചട്ടങ്ങളിൽ നിന്ന് മറുപടി നൽകാം.');
+            } else {
+                appendMessage('assistant', '⚠️ സുരക്ഷാ ക്രമീകരണ പ്രകാരം മുൻപ് അപ്‌ലോഡ് ചെയ്ത രേഖയുടെ കാലാവധി പൂർത്തിയായതിനാൽ അത് ഓട്ടോമാറ്റിക്കായി ഡിലീറ്റ് ചെയ്തിരിക്കുന്നു.');
+            }
+        }
+
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+
+            function updateTimer() {
+                const now = Date.now();
+                const remaining = (uploadedDoc.expiryTimestamp || 0) - now;
+
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    removeDocument(false);
+                    return;
+                }
+
+                const totalSec = Math.floor(remaining / 1000);
+                const hrs = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+                const secs = String(totalSec % 60).padStart(2, '0');
+
+                const timerEl = document.getElementById('countdownTimer');
+                if (timerEl) {
+                    timerEl.innerText = `${hrs}:${mins}:${secs}`;
+                }
+            }
+
+            updateTimer();
+            countdownInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Chat Logic (Analyzing KER + Uploaded Document)
         function handleChat(event) {
             event.preventDefault();
             const input = document.getElementById('queryInput');
@@ -258,9 +457,9 @@
             const loadingId = appendLoading();
             setTimeout(() => {
                 removeElement(loadingId);
-                const answer = findAnswer(query);
+                const answer = generateAnswer(query);
                 appendMessage('assistant', answer);
-            }, 500);
+            }, 600);
         }
 
         function askPrompt(text) {
@@ -268,8 +467,44 @@
             handleChat(new Event('submit'));
         }
 
-        function findAnswer(query) {
+        function generateAnswer(query) {
             const q = query.toLowerCase();
+
+            // 1. If user uploaded document exists, check if answer can be extracted from it
+            if (uploadedDoc.text) {
+                const docText = uploadedDoc.text;
+                // Simple search for matching sentences/paragraphs
+                const sentences = docText.split(/(?<=[.?!\\n])\\s+/);
+                const qWords = q.replace(/[^a-zA-Z0-9\u0D00-\u0D7F ]/g, "").split(/\s+/).filter(w => w.length > 2);
+                
+                let matches = [];
+                for (const sentence of sentences) {
+                    let matchCount = 0;
+                    const sLower = sentence.toLowerCase();
+                    for (const word of qWords) {
+                        if (sLower.includes(word)) matchCount++;
+                    }
+                    if (matchCount > 0) {
+                        matches.push({ text: sentence.trim(), score: matchCount });
+                    }
+                }
+
+                matches.sort((a, b) => b.score - a.score);
+
+                // If high relevance in uploaded document
+                if (matches.length > 0 && matches[0].score >= 2) {
+                    const topSnippets = matches.slice(0, 3).map(m => m.text).join(" ... ");
+                    return `### അപ്‌ലോഡ് ചെയ്ത രേഖയിൽ നിന്നുള്ള വിവരം:
+**ഫയൽ:** \`${uploadedDoc.name}\`
+
+${topSnippets}
+
+---
+*നിങ്ങളുടെ ചോദ്യവുമായി ബന്ധപ്പെട്ട വിവരങ്ങൾ അപ്‌ലോഡ് ചെയ്ത രേഖയിൽ നിന്ന് കണ്ടെത്തിയതാണ്. കൂടാതെ പൊതുവായ KER ചട്ടങ്ങൾ അറിയണമെങ്കിൽ വ്യക്തമായി ചോദിക്കാവുന്നതാണ്.*`;
+                }
+            }
+
+            // 2. Fallback to KER Knowledge Database
             let bestMatch = null;
             let highestScore = 0;
 
@@ -293,11 +528,13 @@
 ${bestMatch.summary}
 
 ---
-*കൂടുതൽ വിശദാംശങ്ങൾക്ക് കേരള എജ്യുക്കേഷൻ ആക്ട് & റൂൾസിലെ നിർദ്ദിഷ്ട അധ്യായങ്ങൾ പരിശോധിക്കുക.*`;
+*Disclaimer: Official file disposals must reference the official Kerala Gazette / KER rule books.*`;
             } else {
-                return `നിങ്ങൾ ചോദിച്ച **"${query}"** എന്ന ചോദ്യവുമായി നേരിട്ട് ബന്ധപ്പെട്ട റൂൾ ഡാറ്റാബേസിൽ കണ്ടെത്താൻ കഴിഞ്ഞില്ല.
+                return `നിങ്ങൾ ചോദിച്ച **"${query}"** എന്ന ചോദ്യവുമായി ബന്ധപ്പെട്ട വിവരങ്ങൾ കണ്ടെത്താൻ സാധിച്ചില്ല.
 
-ദയവായി താഴെ പറയുന്ന പ്രധാന കീവേഡുകൾ ഉപയോഗിച്ച് വീണ്ടും ചോദിച്ചു നോക്കൂ:
+${uploadedDoc.name ? `(അപ്‌ലോഡ് ചെയ്ത രേഖ: **${uploadedDoc.name}**)` : ""}
+
+ദയവായി താഴെ പറയുന്ന പ്രധാന റൂളുകളോ വാക്കുകളോ ഉപയോഗിച്ച് ചോദിക്കുക:
 - **Rule 44A അല്ലെങ്കിൽ ഹെഡ്മാസ്റ്റർ പ്രമോഷൻ**
 - **Rule 43 സ്ഥാനക്കയറ്റങ്ങൾ**
 - **Rule 51A അല്ലെങ്കിൽ 51B മുൻഗണനാ നിയമനം**
@@ -350,7 +587,7 @@ ${bestMatch.summary}
                 </div>
                 <div class="bg-slate-800/80 rounded-2xl rounded-tl-none p-3.5 text-xs text-slate-400 flex items-center gap-2 border border-slate-700/50">
                     <i class="fa-solid fa-circle-notch fa-spin text-emerald-400 text-sm"></i>
-                    <span>KER ചട്ടങ്ങൾ പരിശോധിക്കുന്നു...</span>
+                    <span>രേഖകളും KER ചട്ടങ്ങളും വിശകലനം ചെയ്യുന്നു...</span>
                 </div>
             `;
             box.appendChild(div);
