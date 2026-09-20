@@ -3,7 +3,7 @@ import io
 from typing import List, Optional
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 from pypdf import PdfReader
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -16,22 +16,22 @@ if GEMINI_API_KEY:
 
 app = FastAPI(
     title="KER Ready Reckoner AI",
-    description="Kerala Education Rules & Document Analysis AI Assistant"
+    description="Kerala Education Rules AI Assistant"
 )
 
-# Mount static folder
+# Static files folder
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 session_documents = {}
 
 SYSTEM_INSTRUCTION = """
-നിങ്ങൾ കേരള എജ്യുക്കേഷൻ റൂൾസ് (Kerala Education Rules - KER), സ്കൂൾ വിദ്യാഭ്യാസ ചട്ടങ്ങൾ, അനുബന്ധ സർക്കാർ ഉത്തരവുകൾ എന്നിവയിൽ പ്രാവീണ്യമുള്ള ഒരു ഔദ്യോഗിക AI റെഡി റെക്കണർ അസിസ്റ്റന്റാണ് (KER Ready Reckoner AI).
+നിങ്ങൾ കേരള എജ്യുക്കേഷൻ റൂൾസ് (Kerala Education Rules - KER), സ്കൂൾ വിദ്യാഭ്യാസ ചട്ടങ്ങൾ എന്നിവയിൽ പ്രാവീണ്യമുള്ള ഒരു ഔദ്യോഗിക AI റെഡി റെക്കണർ അസിസ്റ്റന്റാണ്.
 
 നിർദ്ദേശങ്ങൾ:
 1. നൽകിയിരിക്കുന്ന വിവരങ്ങളും KER നിയമങ്ങളും അപഗ്രഥിച്ച് മാത്രം മറുപടി നൽകുക.
-2. സാധ്യമാകുന്നിടത്തെല്ലാം ബന്ധപ്പെട്ട അധ്യായം (Chapter), ചട്ടം (Rule) എന്നിവ വ്യക്തമായി ഉദ്ധരിക്കുക (ഉദാ: KER Chapter XIV-A, Rule 43).
-3. ചോദ്യത്തിന് ആധികാരികവും കൃത്യവുമായ ഉത്തരം നൽകുക. വ്യാജ വിവരങ്ങൾ ഉണ്ടാക്കരുത്.
-4. മലയാളത്തിൽ ചോദിക്കുന്ന ചോദ്യങ്ങൾക്ക് മലയാളത്തിൽ വ്യക്തമായി മറുപടി നൽകുക.
+2. സാധ്യമാകുന്നിടത്തെല്ലാം ബന്ധപ്പെട്ട അധ്യായം (Chapter), ചട്ടം (Rule) എന്നിവ ഉദ്ധരിക്കുക (ഉദാ: KER Chapter XIV-A, Rule 43).
+3. ചോദ്യത്തിന് ആധികാരികവും കൃത്യവുമായ ഉത്തരം നൽകുക. വ്യാജ വിവരങ്ങൾ നൽകരുത്.
+4. ചോദ്യം മലയാളത്തിലാണെങ്കിൽ മലയാളത്തിൽ വ്യക്തമായി മറുപടി നൽകുക.
 """
 
 def extract_text_from_pdf_stream(stream_bytes: bytes) -> str:
@@ -97,24 +97,41 @@ async def chat(
 {SYSTEM_INSTRUCTION}
 
 റഫറൻസ് വിവരങ്ങൾ:
-{doc_context if doc_context else "പ്രത്യേകം ഫയൽ അപ്‌ലോഡ് ചെയ്തിട്ടില്ല. KER നിയമങ്ങൾ അനുസരിച്ച് മറുപടി നൽകുക."}
+{doc_context if doc_context else "പ്രത്യേകം ഫയൽ അപ്‌ലോഡ് ചെയ്തിട്ടില്ല. കേരള എജ്യുക്കേഷൻ റൂൾസ് (KER) പൊതു നിയമങ്ങൾ അനുസരിച്ച് മറുപടി നൽകുക."}
 
 ചോദ്യം:
 {query}
 """
 
-    # ലഭ്യമായ മോഡലുകൾ ഒന്നിനുപുറകെ ഒന്നായി ട്രൈ ചെയ്യുന്നു (Auto-fallback)
-    model_candidates = [
-        "gemini-1.5-flash-latest",
-        "gemini-1.5-flash",
-        "gemini-pro",
-        "gemini-1.5-pro"
+    # നിങ്ങളുടെ API കീയിൽ ലഭ്യമായിട്ടുള്ള മോഡലുകൾ സ്വയം കണ്ടെത്തുന്നു (Dynamic Model Discovery)
+    try:
+        supported_models = []
+        for m in genai.list_models():
+            if 'generateContent' in m.supported_generation_methods:
+                supported_models.append(m.name)
+    except Exception as e:
+        supported_models = []
+
+    # മുൻഗണനാ ക്രമത്തിൽ ലിസ്റ്റ് ചെയ്യുന്നു (Gemini 2.5 / 2.0 / 1.5)
+    preferred_order = [
+        "models/gemini-2.5-flash",
+        "models/gemini-2.0-flash",
+        "models/gemini-1.5-flash",
+        "models/gemini-2.5-pro",
+        "models/gemini-1.5-pro"
     ]
     
+    # കീയിൽ ലഭ്യമായവയിൽ നിന്ന് മികച്ച മോഡൽ തിരഞ്ഞെടുക്കുന്നു
+    chosen_models = [m for m in preferred_order if m in supported_models]
+    if not chosen_models and supported_models:
+        chosen_models = supported_models
+    elif not chosen_models:
+        chosen_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+
     last_error = None
-    for m_name in model_candidates:
+    for model_name in chosen_models:
         try:
-            model = genai.GenerativeModel(m_name)
+            model = genai.GenerativeModel(model_name)
             response = model.generate_content(full_prompt)
             return {
                 "response": response.text,
