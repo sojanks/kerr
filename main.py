@@ -103,43 +103,48 @@ async def chat(
 {query}
 """
 
-    # നിങ്ങളുടെ API കീയിൽ ലഭ്യമായിട്ടുള്ള മോഡലുകൾ സ്വയം കണ്ടെത്തുന്നു (Dynamic Model Discovery)
+    # 1. നിങ്ങളുടെ API കീയിൽ അനുവദിച്ചിട്ടുള്ള സജീവ മോഡലുകൾ ലൈവായി കണ്ടെത്തുന്നു
+    available_models = []
     try:
-        supported_models = []
         for m in genai.list_models():
             if 'generateContent' in m.supported_generation_methods:
-                supported_models.append(m.name)
+                available_models.append(m.name)
     except Exception as e:
-        supported_models = []
+        pass
 
-    # മുൻഗണനാ ക്രമത്തിൽ ലിസ്റ്റ് ചെയ്യുന്നു (Gemini 2.5 / 2.0 / 1.5)
-    preferred_order = [
-        "models/gemini-2.5-flash",
-        "models/gemini-2.0-flash",
-        "models/gemini-1.5-flash",
-        "models/gemini-2.5-pro",
-        "models/gemini-1.5-pro"
+    # 2. സജീവമായ നിലവിലെ മോഡലുകളുടെ മുൻഗണനാ ലിസ്റ്റ് (2.5 / 2.0 ഫ്ലാഷ് മോഡലുകൾ)
+    candidate_names = [
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-pro",
+        "gemini-2.0-flash-001"
     ]
     
-    # കീയിൽ ലഭ്യമായവയിൽ നിന്ന് മികച്ച മോഡൽ തിരഞ്ഞെടുക്കുന്നു
-    chosen_models = [m for m in preferred_order if m in supported_models]
-    if not chosen_models and supported_models:
-        chosen_models = supported_models
-    elif not chosen_models:
-        chosen_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    # പൂർണ്ണമായ പേരുകളിലേക്ക് മാറ്റുന്നു (ഉദാ: models/gemini-2.5-flash)
+    target_models = []
+    for c in candidate_names:
+        full_name = c if c.startswith("models/") else f"models/{c}"
+        if full_name in available_models or c in available_models:
+            target_models.append(full_name)
 
-    last_error = None
-    for model_name in chosen_models:
+    # ലിസ്റ്റിൽ കണ്ടെത്തിയില്ലെങ്കിൽ ബാക്കി ലൈവിലുള്ള ഏതെങ്കിലും generateContent മോഡൽ എടുക്കുന്നു
+    if not target_models:
+        target_models = available_models if available_models else ["gemini-2.5-flash", "gemini-2.0-flash"]
+
+    # 3. ലഭ്യമായ മോഡലിൽ നിന്ന് മറുപടി ഉണ്ടാക്കുന്നു
+    last_err = None
+    for model_id in target_models:
         try:
-            model = genai.GenerativeModel(model_name)
+            model = genai.GenerativeModel(model_id)
             response = model.generate_content(full_prompt)
             return {
                 "response": response.text,
                 "has_document": bool(doc_context),
                 "document_name": session_documents.get(session_id, {}).get("filename", None)
             }
-        except Exception as err:
-            last_error = err
+        except Exception as e:
+            last_err = e
             continue
-            
-    raise HTTPException(status_code=500, detail=f"AI പ്രോസസ്സിംഗിൽ തകരാർ: {str(last_error)}")
+
+    raise HTTPException(status_code=500, detail=f"AI പ്രോസസ്സിംഗിൽ തകരാർ: {str(last_err)}")
