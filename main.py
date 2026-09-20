@@ -99,17 +99,11 @@ async def chat(
 {query}
 """
 
-    # AQ. കീകളെയും AIza കീകളെയും ഒരുപോലെ സപ്പോർട്ട് ചെയ്യുന്ന മോഡലുകൾ
     models_to_try = [
         "gemini-2.5-flash",
         "gemini-2.0-flash",
-        "gemini-1.5-flash"
+        "gemini-2.5-pro"
     ]
-
-    headers = {
-        "Content-Type": "application/json",
-        "x-goog-api-key": active_key
-    }
 
     payload = {
         "contents": [
@@ -122,10 +116,16 @@ async def chat(
     }
 
     last_error_msg = ""
+    # URL ക്വറി പാരാമീറ്റർ (?key=...) വഴി അയക്കുന്നു
     for model_name in models_to_try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={active_key}"
         try:
-            res = requests.post(url, headers=headers, json=payload, timeout=60)
+            res = requests.post(
+                url,
+                headers={"Content-Type": "application/json"},
+                json=payload,
+                timeout=60
+            )
             data = res.json()
             
             if res.status_code == 200:
