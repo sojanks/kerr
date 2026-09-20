@@ -1,18 +1,16 @@
 import os
 import io
-from typing import List, Optional
+from typing import Optional
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pypdf import PdfReader
-import google.generativeai as genai
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
 
 app = FastAPI(
     title="KER Ready Reckoner AI",
@@ -79,21 +77,19 @@ async def chat(
     session_id: str = Form("default"),
     api_key: Optional[str] = Form(None)
 ):
-    active_key = api_key or GEMINI_API_KEY
+    active_key = (api_key or GEMINI_API_KEY).strip()
     if not active_key:
         raise HTTPException(
             status_code=400, 
             detail="Gemini API Key ലഭ്യമല്ല. ദയവായി സെറ്റിങ്സിൽ API Key നൽകുക."
         )
     
-    genai.configure(api_key=active_key)
-    
     doc_context = ""
     if session_id in session_documents:
         doc_info = session_documents[session_id]
         doc_context = f"\n\n[ഉപയോക്താവ് അപ്‌ലോഡ് ചെയ്ത ഫയൽ: {doc_info['filename']}]\n{doc_info['text']}"
     
-    full_prompt = f"""
+    user_prompt = f"""
 {SYSTEM_INSTRUCTION}
 
 റഫറൻസ് വിവരങ്ങൾ:
@@ -103,48 +99,50 @@ async def chat(
 {query}
 """
 
-    # 1. ഗൂഗിൾ നിർദ്ദേശിച്ച ഏറ്റവും പുതിയ മോഡലുകളുടെ മുൻഗണനാ ക്രമം
-    latest_preferred_models = [
-        "models/gemini-3.1-pro-preview",
-        "gemini-3.1-pro-preview",
-        "models/gemini-3-flash",
-        "gemini-3-flash",
-        "models/gemini-2.5-flash",
-        "gemini-2.5-flash"
+    # AQ. കീകളെയും AIza കീകളെയും ഒരുപോലെ സപ്പോർട്ട് ചെയ്യുന്ന മോഡലുകൾ
+    models_to_try = [
+        "gemini-2.5-flash",
+        "gemini-2.0-flash",
+        "gemini-1.5-flash"
     ]
 
-    # 2. നിങ്ങളുടെ API കീയിൽ സജീവമായിട്ടുള്ള മോഡലുകൾ കണ്ടെത്തുന്നു
-    active_account_models = []
-    try:
-        for m in genai.list_models():
-            if 'generateContent' in m.supported_generation_methods:
-                active_account_models.append(m.name)
-    except Exception:
-        pass
+    headers = {
+        "Content-Type": "application/json",
+        "x-goog-api-key": active_key
+    }
 
-    # മുൻഗണനാ മോഡലുകൾ ആദ്യം വെക്കുന്നു, അതിനു ശേഷം അക്കൗണ്ടിലുള്ള മറ്റെല്ലാ മോഡലുകളും
-    candidate_list = []
-    for model_name in latest_preferred_models:
-        if model_name not in candidate_list:
-            candidate_list.append(model_name)
-            
-    for model_name in active_account_models:
-        if model_name not in candidate_list:
-            candidate_list.append(model_name)
-
-    # 3. മോഡലുകൾ റൺ ചെയ്യുന്നു
-    last_err = None
-    for target_model in candidate_list:
-        try:
-            model = genai.GenerativeModel(target_model)
-            response = model.generate_content(full_prompt)
-            return {
-                "response": response.text,
-                "has_document": bool(doc_context),
-                "document_name": session_documents.get(session_id, {}).get("filename", None)
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": user_prompt}
+                ]
             }
-        except Exception as e:
-            last_err = e
+        ]
+    }
+
+    last_error_msg = ""
+    for model_name in models_to_try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent"
+        try:
+            res = requests.post(url, headers=headers, json=payload, timeout=60)
+            data = res.json()
+            
+            if res.status_code == 200:
+                candidates = data.get("candidates", [])
+                if candidates and "content" in candidates[0]:
+                    parts = candidates[0]["content"].get("parts", [])
+                    reply_text = "".join([p.get("text", "") for p in parts])
+                    return {
+                        "response": reply_text,
+                        "has_document": bool(doc_context),
+                        "document_name": session_documents.get(session_id, {}).get("filename", None)
+                    }
+            else:
+                err = data.get("error", {})
+                last_error_msg = err.get("message", res.text)
+        except Exception as ex:
+            last_error_msg = str(ex)
             continue
 
-    raise HTTPException(status_code=500, detail=f"AI പ്രോസസ്സിംഗിൽ തകരാർ: {str(last_err)}")
+    raise HTTPException(status_code=500, detail=f"AI പ്രോസസ്സിംഗിൽ തകരാർ: {last_error_msg}")
