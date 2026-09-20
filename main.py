@@ -103,40 +103,40 @@ async def chat(
 {query}
 """
 
-    # 1. നിങ്ങളുടെ API കീയിൽ അനുവദിച്ചിട്ടുള്ള സജീവ മോഡലുകൾ ലൈവായി കണ്ടെത്തുന്നു
-    available_models = []
+    # 1. ഗൂഗിൾ നിർദ്ദേശിച്ച ഏറ്റവും പുതിയ മോഡലുകളുടെ മുൻഗണനാ ക്രമം
+    latest_preferred_models = [
+        "models/gemini-3.1-pro-preview",
+        "gemini-3.1-pro-preview",
+        "models/gemini-3-flash",
+        "gemini-3-flash",
+        "models/gemini-2.5-flash",
+        "gemini-2.5-flash"
+    ]
+
+    # 2. നിങ്ങളുടെ API കീയിൽ സജീവമായിട്ടുള്ള മോഡലുകൾ കണ്ടെത്തുന്നു
+    active_account_models = []
     try:
         for m in genai.list_models():
             if 'generateContent' in m.supported_generation_methods:
-                available_models.append(m.name)
-    except Exception as e:
+                active_account_models.append(m.name)
+    except Exception:
         pass
 
-    # 2. സജീവമായ നിലവിലെ മോഡലുകളുടെ മുൻഗണനാ ലിസ്റ്റ് (2.5 / 2.0 ഫ്ലാഷ് മോഡലുകൾ)
-    candidate_names = [
-        "gemini-2.5-flash",
-        "gemini-2.0-flash",
-        "gemini-2.5-flash-lite",
-        "gemini-2.5-pro",
-        "gemini-2.0-flash-001"
-    ]
-    
-    # പൂർണ്ണമായ പേരുകളിലേക്ക് മാറ്റുന്നു (ഉദാ: models/gemini-2.5-flash)
-    target_models = []
-    for c in candidate_names:
-        full_name = c if c.startswith("models/") else f"models/{c}"
-        if full_name in available_models or c in available_models:
-            target_models.append(full_name)
+    # മുൻഗണനാ മോഡലുകൾ ആദ്യം വെക്കുന്നു, അതിനു ശേഷം അക്കൗണ്ടിലുള്ള മറ്റെല്ലാ മോഡലുകളും
+    candidate_list = []
+    for model_name in latest_preferred_models:
+        if model_name not in candidate_list:
+            candidate_list.append(model_name)
+            
+    for model_name in active_account_models:
+        if model_name not in candidate_list:
+            candidate_list.append(model_name)
 
-    # ലിസ്റ്റിൽ കണ്ടെത്തിയില്ലെങ്കിൽ ബാക്കി ലൈവിലുള്ള ഏതെങ്കിലും generateContent മോഡൽ എടുക്കുന്നു
-    if not target_models:
-        target_models = available_models if available_models else ["gemini-2.5-flash", "gemini-2.0-flash"]
-
-    # 3. ലഭ്യമായ മോഡലിൽ നിന്ന് മറുപടി ഉണ്ടാക്കുന്നു
+    # 3. മോഡലുകൾ റൺ ചെയ്യുന്നു
     last_err = None
-    for model_id in target_models:
+    for target_model in candidate_list:
         try:
-            model = genai.GenerativeModel(model_id)
+            model = genai.GenerativeModel(target_model)
             response = model.generate_content(full_prompt)
             return {
                 "response": response.text,
